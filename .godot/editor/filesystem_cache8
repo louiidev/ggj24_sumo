@@ -1,9 +1,10 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1706270125
+::res://::1706285698
+game_globals.gd::GDScript::-1::1706270815::0::1::::<>Node<>::
 icon.svg::CompressedTexture2D::6941359089888752222::1706269750::1706270125::1::::<><>::
-README.md::TextFile::-1::1706269893::0::1::::<><>::
-::res://Scenes/::1706269996
-king_of_the_hill.gd::GDScript::-1::1706269996::0::1::::<>Node2D<>::
-king_of_the_hill.tscn::PackedScene::6597804211410739131::1706269982::0::1::::<><>::res://Scenes/king_of_the_hill.gd
+README.md::TextFile::-1::1706270364::0::1::::<><>::
+::res://Scenes/::1706270815
+king_of_the_hill.gd::GDScript::-1::1706270612::0::1::::<>Node2D<>::
+king_of_the_hill.tscn::PackedScene::6597804211410739131::1706270815::0::1::::<><>::res://Scenes/king_of_the_hill.gd
 main.tscn::PackedScene::7742376170363190820::1706269750::0::1::::<><>::
 player_scores.tscn::PackedScene::5805043886345063824::1706269943::0::1::::<><>::

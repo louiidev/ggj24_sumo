@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/king_of_the_hill.gd" id="1_txxh0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qm7ud"]
-radius = 162.985
+radius = 59.0085
 
 [node name="kingOfTheHill" type="Node2D"]
 script = ExtResource("1_txxh0")
@@ -13,6 +13,12 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_qm7ud")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
 
 [connection signal="body_entered" from="Area2D" to="." method="sumoEntered"]
 [connection signal="body_exited" from="Area2D" to="." method="sumoExited"]
+[connection signal="timeout" from="Timer" to="." method="scoreNow"]
