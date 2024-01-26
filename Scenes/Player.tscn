@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dm0ygsrgxenrw"]
+
+[ext_resource type="Script" path="res://Scenes/Player.gd" id="1_ut18v"]
+[ext_resource type="Texture2D" uid="uid://bjl5gevyspfrc" path="res://Assets/yellow_body_circle.png" id="1_y6q1p"]
+[ext_resource type="Texture2D" uid="uid://iap31w80ittw" path="res://Assets/hand_yellow_closed.png" id="2_sokx8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kk4rx"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_ut18v")
+
+[node name="RightHand" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(150, 0)
+texture = ExtResource("2_sokx8")
+
+[node name="Body" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_y6q1p")
+
+[node name="LeftHand" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(-150, 0)
+texture = ExtResource("2_sokx8")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+scale = Vector2(19, 19)
+shape = SubResource("CircleShape2D_kk4rx")
