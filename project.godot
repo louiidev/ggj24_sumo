@@ -14,6 +14,16 @@ config/name="ggj24_sumo"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameGlobals="*res://game_globals.gd"
+
 [dotnet]
 
 project/assembly_name="ggj24_sumo"
+
+[layer_names]
+
+2d_physics/layer_1="Sums"
+2d_physics/layer_2="Powerups"
+2d_physics/layer_3="Obsticles"

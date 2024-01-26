@@ -2,8 +2,8 @@ extends Node2D
 
 signal updateScore(playerNum, ScoreAdd)
 
-func playerEntered():
+func sumoEntered(bodyIn):
 	pass
 	
-func playerExited():
+func sumoExited(bodyOut):
 	pass

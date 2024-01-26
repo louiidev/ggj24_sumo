@@ -9,6 +9,10 @@ radius = 162.985
 script = ExtResource("1_txxh0")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_qm7ud")
+
+[connection signal="body_entered" from="Area2D" to="." method="sumoEntered"]
+[connection signal="body_exited" from="Area2D" to="." method="sumoExited"]
