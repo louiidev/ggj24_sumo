@@ -7,3 +7,7 @@ res://Scenes/player_scores.gd
 res://Scenes/test_player.tscn
 res://Scenes/test_player.gd
 res://README.md
+res://Powerup.gd
+res://Scenes/powerup.tscn
+res://Scenes/Powerup.gd
+res://Scenes/main.gd
