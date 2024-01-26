@@ -10,11 +10,6 @@ func _ready():
 	addPowerup()
 	addPowerup()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func addPowerup():
 	var r = boundsRadius * sqrt(randf())
 	var theta = randf() * 2 * PI
