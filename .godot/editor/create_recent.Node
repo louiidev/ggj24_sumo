@@ -1,6 +1,10 @@
+Sprite2D
+MarginContainer
+PanelContainer
+Panel
+TileMap
 CollisionShape2D
 CharacterBody2D
-Sprite2D
 CanvasLayer
 Timer
 Node

@@ -1,10 +1,17 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1706285698
-game_globals.gd::GDScript::-1::1706270815::0::1::::<>Node<>::
+::res://::1706295719
+game_globals.gd::GDScript::-1::1706290516::0::1::::<>Node<>::
 icon.svg::CompressedTexture2D::6941359089888752222::1706269750::1706270125::1::::<><>::
-README.md::TextFile::-1::1706270364::0::1::::<><>::
-::res://Scenes/::1706270815
-king_of_the_hill.gd::GDScript::-1::1706270612::0::1::::<>Node2D<>::
-king_of_the_hill.tscn::PackedScene::6597804211410739131::1706270815::0::1::::<><>::res://Scenes/king_of_the_hill.gd
-main.tscn::PackedScene::7742376170363190820::1706269750::0::1::::<><>::
-player_scores.tscn::PackedScene::5805043886345063824::1706269943::0::1::::<><>::
+README.md::TextFile::-1::1706295719::0::1::::<><>::
+::res://images/::1706297532
+paint circle.png::CompressedTexture2D::6712708353999488109::1706297532::1706297543::1::::<><>::
+Wood_06-128x128.png::CompressedTexture2D::5103436455052610297::1706295919::1706295926::1::::<><>::
+Wood_18-128x128.png::CompressedTexture2D::9159600417723104452::1706295304::1706295411::1::::<><>::
+::res://Scenes/::1706296436
+king_of_the_hill.gd::GDScript::-1::1706290998::0::1::::<>Node2D<>::
+king_of_the_hill.tscn::PackedScene::6597804211410739131::1706296436::0::1::::<><>::res://Scenes/king_of_the_hill.gd
+main.tscn::PackedScene::7742376170363190820::1706296436::0::1::::<><>::uid://coyahvy30jw4g::::res://Scenes/player_scores.tscn<>uid://ceye383gobb3v::::res://images/Wood_06-128x128.png<>uid://c1aa4vl6psaxn::::res://Scenes/king_of_the_hill.tscn<>uid://buv8l4xkew1po::::res://Scenes/test_player.tscn<>uid://d3q8jsoqyw3mm::::res://images/Wood_18-128x128.png
+player_scores.tscn::PackedScene::5805043886345063824::1706296436::0::1::::<><>::res://Scenes/player_scores.gd
+player_scores.gd::GDScript::-1::1706296431::0::1::::<>CanvasLayer<>::
+test_player.gd::GDScript::-1::1706290830::0::1::::<>CharacterBody2D<>::
+test_player.tscn::PackedScene::3835574352951501796::1706296436::0::1::::<><>::res://Scenes/test_player.gd<>uid://c55pf1uijbtdu::::res://icon.svg

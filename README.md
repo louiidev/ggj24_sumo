@@ -10,3 +10,4 @@
 	1 - sumos
 	2 - powerups
 	3 - obsticles
+
