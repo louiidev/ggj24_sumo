@@ -61,7 +61,11 @@ func _ready():
 func _process(_delta):
 	pass
 
-func onPlayerTouch():
+func onPlayerTouch(_objIn):
 	$Label.visible = true
 	var tween = get_tree().create_tween()
-	tween.tween_property($Label,"scale",5,2)
+	tween.set_parallel(true)
+	tween.tween_property($Label,"scale",Vector2(5,5),1)
+	tween.tween_property($Label,"position",Vector2(-$Label.size.x*2.5,0),1)
+	tween.tween_property($Dish,"scale",Vector2(0,0),1)
+	tween.connect('finished', self.queue_free)
