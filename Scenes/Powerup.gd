@@ -51,17 +51,27 @@ var food_files = [
 "98_sushi_dish.png",
 "51_giantgummybear_dish.png"]
 
+enum powerupType {SCORE,DUD}
+
+var type:powerupType = powerupType.DUD
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Dish.texture = load('images/food/' + food_files.pick_random())
-
+	type = powerupType.values().pick_random()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-func onPlayerTouch(_objIn):
+func onPlayerTouch(objIn):
+	match type:
+		powerupType.SCORE:
+			GameGlobals.playerScores[objIn.playerNum] += 10
+			GameGlobals.updateScore.emit(objIn.playerNum)
+			$Label.text = '10 Points'
+		powerupType.DUD:
+			$Label.text = 'Bad luck!'
 	$Label.visible = true
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
