@@ -38,14 +38,11 @@ position = Vector2(595, 305)
 
 [node name="TestPlayer" parent="." instance=ExtResource("3_o8udx")]
 position = Vector2(495, 316)
-up_direction = Vector2(0.707107, 0.707107)
-playerNum = 1
+playerNum = 2
 
 [node name="Player" parent="." instance=ExtResource("6_nwdld")]
 position = Vector2(601, 446)
 playerNum = 1
-moveSpeed = 900.0
-tackleSpeed = 1800.0
 
 [node name="SecondPassed" type="Timer" parent="."]
 autostart = true

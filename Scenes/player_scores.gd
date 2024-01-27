@@ -9,8 +9,7 @@ func _ready():
 	GameGlobals.updateCountdown.connect(updateCountdown)
 	$MarginContainer/HBoxContainer/TimeRemaining.text = str(GameGlobals.countDown)
 
-
-func updateScore(playerNum):
+func updateScore(playerNum, _changeIn):
 	scoreLabels[playerNum].text = str(GameGlobals.playerScores[playerNum])
 	
 func updateCountdown():

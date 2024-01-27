@@ -51,7 +51,7 @@ var food_files = [
 "98_sushi_dish.png",
 "51_giantgummybear_dish.png"]
 
-enum powerupType {SCORE,DUD}
+enum powerupType {SCORE,DUD,REVERSE_SCORE,SPEED_PLAYER}
 
 var type:powerupType = powerupType.DUD
 
@@ -72,10 +72,17 @@ func onPlayerTouch(objIn):
 	match type:
 		powerupType.SCORE:
 			GameGlobals.playerScores[objIn.playerNum] += 10
-			GameGlobals.updateScore.emit(objIn.playerNum)
+			GameGlobals.updateScore.emit(objIn.playerNum, 10)
 			$Label.text = '10 Points'
 		powerupType.DUD:
 			$Label.text = 'Bad luck!'
+		powerupType.REVERSE_SCORE:
+			$Label.text = 'King loser'
+			GameGlobals.powerupTrigger.emit(powerupType.REVERSE_SCORE)
+		powerupType.SPEED_PLAYER:
+			$Label.text = 'Need for speed'
+			objIn.handlePowerup(powerupType.SPEED_PLAYER)
+			
 	$Label.visible = true
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)

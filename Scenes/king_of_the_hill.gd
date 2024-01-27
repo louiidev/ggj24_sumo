@@ -4,6 +4,15 @@ extends Node2D
 
 var bodiesIn:Array
 var bodiesScoring:Array
+var reverseScoreTimes:float = 0
+
+func _ready():
+	GameGlobals.powerupTrigger.connect(handlePowerup)
+
+func handlePowerup(powerupType):
+	match powerupType:
+		2: #reverse score
+			reverseScoreTimes = 3
 
 func sumoEntered(bodyIn):
 	if(bodiesIn.find(bodyIn) == -1):
@@ -19,7 +28,12 @@ func sumoExited(bodyOut):
 		bodiesScoring.remove_at(fIdx)
 
 func scoreNow():
+	var score = scoreToAdd
+	if(reverseScoreTimes > 0):
+		score = scoreToAdd * -2
+		reverseScoreTimes -= 1
+	
 	for body in bodiesScoring:
-		GameGlobals.playerScores[body.playerNum] += scoreToAdd
-		GameGlobals.updateScore.emit(body.playerNum)
+		GameGlobals.playerScores[body.playerNum] += score
+		GameGlobals.updateScore.emit(body.playerNum, score)
 	bodiesScoring = bodiesIn
