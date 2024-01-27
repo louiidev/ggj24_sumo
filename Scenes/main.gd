@@ -5,6 +5,7 @@ var boundsRadius:float = 300
 var powerup:PackedScene = preload('res://Scenes/Powerup.tscn')
 
 @export var powerupsAtStart = 3
+var player_scene: PackedScene = preload("res://Scenes/Player.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,3 +27,7 @@ func secondPast():
 	GameGlobals.updateCountdown.emit()
 	if(GameGlobals.countDown % 5 ==0):
 		addPowerup()
+	
+	
+func init():
+	pass

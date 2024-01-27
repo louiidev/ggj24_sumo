@@ -2,6 +2,7 @@ extends Node
 
 enum { PLAYER_1 = 0, PLAYER_2 = 1, PLAYER_3 = 2, PLAYER_4 = 3}
 
+
 var player_panels: Array[Panel] = [null, null, null, null]
 var player_select_item = preload("res://Scenes/PlayerSelectItem.tscn")
 
@@ -48,8 +49,9 @@ func _joy_connection_changed(device: int, connected: bool):
 	print(str(device)+" "+str(connected))
 	
 func start_game():
-	get_tree().root.add_child(main_scene.instantiate())
-	
+	var scene = main_scene.instantiate()
+	get_tree().root.add_child(scene)
+	scene.init()
 	get_node("/root/Lobby").hide()
 	enabled = false
 	pass
