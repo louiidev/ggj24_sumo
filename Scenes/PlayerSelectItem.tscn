@@ -21,4 +21,7 @@ offset_left = 5.0
 offset_top = 98.0
 offset_right = 67.0
 offset_bottom = 121.0
-text = "Player 1"
+theme_override_font_sizes/font_size = 28
+text = "PRESS START TO JOIN
+
+NPC"

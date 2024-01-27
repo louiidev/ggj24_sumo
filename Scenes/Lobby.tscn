@@ -16,9 +16,10 @@ offset_bottom = 726.0
 custom_minimum_size = Vector2(100, 100)
 layout_direction = 2
 layout_mode = 0
+offset_top = 410.0
 offset_right = 1275.0
-offset_bottom = 310.0
-alignment = 1
+offset_bottom = 720.0
+alignment = 2
 
 [node name="Panel" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
 visible = false
