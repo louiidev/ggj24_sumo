@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dikp2l3gvbj8g"]
+[gd_scene load_steps=13 format=3 uid="uid://dikp2l3gvbj8g"]
 
 [ext_resource type="PackedScene" uid="uid://dk73d00m8s47q" path="res://Scenes/player_scores.tscn" id="1_70kyn"]
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_appyy"]
@@ -18,11 +18,17 @@ sources/1 = SubResource("TileSetAtlasSource_w8twd")
 [sub_resource type="CircleShape2D" id="CircleShape2D_du6i0"]
 radius = 240.0
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_02vi5"]
-b = Vector2(2.08165e-12, 722)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uel2o"]
+size = Vector2(309, 742)
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_hblfi"]
-b = Vector2(1280, 2.08165e-12)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7lqn"]
+size = Vector2(387, 738)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8bfsj"]
+size = Vector2(1294, 378)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bkw86"]
+size = Vector2(1283, 247)
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_appyy")
@@ -73,23 +79,25 @@ autostart = true
 [node name="WestBorder" type="StaticBody2D" parent="Borders"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WestBorder"]
-shape = SubResource("SegmentShape2D_02vi5")
+position = Vector2(-144.5, 361)
+shape = SubResource("RectangleShape2D_uel2o")
 
 [node name="EastBorder" type="StaticBody2D" parent="Borders"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/EastBorder"]
-position = Vector2(1280, -1)
-shape = SubResource("SegmentShape2D_02vi5")
+position = Vector2(1463.5, 358)
+shape = SubResource("RectangleShape2D_u7lqn")
 
 [node name="NorthBorder" type="StaticBody2D" parent="Borders"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/NorthBorder"]
-shape = SubResource("SegmentShape2D_hblfi")
+position = Vector2(637, -179)
+shape = SubResource("RectangleShape2D_8bfsj")
 
 [node name="SouthBorder" type="StaticBody2D" parent="Borders"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/SouthBorder"]
-position = Vector2(0, 722)
-shape = SubResource("SegmentShape2D_hblfi")
+position = Vector2(631.5, 835.5)
+shape = SubResource("RectangleShape2D_bkw86")
 
 [connection signal="timeout" from="SecondPassed" to="." method="_on_second_passed_timeout"]
