@@ -71,8 +71,8 @@ func updateCountdown():
 func onPlayerTouch(objIn):
 	match type:
 		powerupType.SCORE:
-			GameGlobals.playerScores[objIn.playerNum] += 10
-			GameGlobals.updateScore.emit(objIn.playerNum, 10)
+			GameGlobals.playerScores[objIn.deviceId] += 10
+			GameGlobals.updateScore.emit(objIn.deviceId, 10)
 			$Label.text = '10 Points'
 		powerupType.DUD:
 			$Label.text = 'Bad luck!'
