@@ -55,14 +55,18 @@ enum powerupType {SCORE,DUD}
 
 var type:powerupType = powerupType.DUD
 
+@export var timeToLive = 10
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Dish.texture = load('images/food/' + food_files.pick_random())
 	type = powerupType.values().pick_random()
+	GameGlobals.updateCountdown.connect(updateCountdown)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
+func updateCountdown():
+	timeToLive -= 1
+	if(timeToLive < 1):
+		queue_free()
 
 func onPlayerTouch(objIn):
 	match type:
