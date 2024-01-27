@@ -14,8 +14,8 @@ func updateScore(playerNum, _changeIn):
 	
 func updateCountdown():
 	$MarginContainer/HBoxContainer/TimeRemaining.text = str(GameGlobals.countDown)
-	$TickSound.play()
 	if(GameGlobals.countDown < 11):
+		$TickSound.play()
 		$MarginContainer/HBoxContainer/TimeRemaining.set("theme_override_colors/font_color",Color(1,0.5,0.5))
 		if(GameGlobals.countDown % 2 == 0):
 			$MarginContainer/HBoxContainer/TimeRemaining.set("theme_override_font_sizes/font_size",42)

@@ -71,6 +71,9 @@ func _physics_process(delta):
 	)
 	
 	look_at(position + playerLookDirection)
+	
+	if($Labels/ScoreChange.visible): #If visible score labe should be rotated up
+		$Labels.rotation = rotation * -1
 
 func _integrate_forces(state):
 	state.apply_force(playerMoveDirection * moveSpeed)
@@ -93,25 +96,23 @@ func scoreUpdate(playerNumIn, scoreIn):
 		var scoreStr = str(scoreIn)
 		if(scoreIn > 0):
 			scoreStr = '+'+scoreStr
-			$ScoreChange.set("theme_override_colors/font_color",Color(0.5,1,0.5))
+			$Labels/ScoreChange.set("theme_override_colors/font_color",Color(0.5,1,0.5))
 		else:
 			scoreStr = scoreStr
-			$ScoreChange.set("theme_override_colors/font_color",Color(1,0.5,0.5))
-		$ScoreChange.text = scoreStr
-		$ScoreChange.visible = true
+			$Labels/ScoreChange.set("theme_override_colors/font_color",Color(1,0.5,0.5))
+		$Labels/ScoreChange.text = scoreStr
+		$Labels/ScoreChange.visible = true
 		var tween = get_tree().create_tween()
 		tween.set_parallel(true)
-		tween.tween_property($ScoreChange,"scale",Vector2(5,5),1)
-		tween.tween_property($ScoreChange,"position",Vector2(-$ScoreChange.size.x*2.5,-200),1)
-		tween.tween_property($ScoreChange,"visible",false,1)
+		tween.tween_property($Labels/ScoreChange,"scale",Vector2(5,5),1)
+		tween.tween_property($Labels/ScoreChange,"position",Vector2(-$Labels/ScoreChange.size.x*2.5,-200),1)
+		tween.tween_property($Labels/ScoreChange,"visible",false,1)
 		tween.connect('finished', scoreLabelReset)
 		tween.play()
 
 func scoreLabelReset():
-	$ScoreChange.scale = Vector2(1,1)
-	$ScoreChange.position = Vector2(0,-54)
+	$Labels/ScoreChange.scale = Vector2(1,1)
+	$Labels/ScoreChange.position = Vector2(0,-54)
 
 func _on_attack_timer_timeout():
 	canAttack = true
-	
-	pass

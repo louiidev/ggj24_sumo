@@ -35,11 +35,15 @@ position = Vector2(-150, 0)
 texture = ExtResource("2_sokx8")
 flip_h = true
 
-[node name="ScoreChange" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="Labels" type="Node2D" parent="."]
+rotation = 0.20944
+
+[node name="ScoreChange" type="Label" parent="Labels"]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
