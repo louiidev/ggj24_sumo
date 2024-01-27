@@ -7,10 +7,16 @@ var powerup:PackedScene = preload('res://Scenes/Powerup.tscn')
 @export var powerupsAtStart = 3
 var player_scene: PackedScene = preload("res://Scenes/Player.tscn")
 
+var players: Array[Node2D] = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for num in powerupsAtStart:
 		addPowerup()
+		
+	# FOR TESTING (REMOVE ONCE DONE)
+	add_player({ 'device_id': 0, 'is_real_player': true })
+	add_player({ 'device_id': 1, 'is_real_player': false })
 
 func addPowerup():
 	var r = boundsRadius * sqrt(randf())
@@ -29,13 +35,17 @@ func secondPast():
 		addPowerup()
 	
 	
+func add_player(p):
+	var player: Node2D = player_scene.instantiate()
+	player.init(p['device_id'], p['is_real_player'])
+	player.global_position = Vector2(50, 50)
+	add_child(player)
+	players.push_back(player)
+	
+	
 func init(playerData: Array):
 	for p in playerData:
-		var player: Node2D = player_scene.instantiate()
-		player.init(p['device_id'], p['is_real_player'])
-		player.global_position = Vector2(50, 50)
-		add_child(player)
-			
+		add_player(p)
 	
 
 
