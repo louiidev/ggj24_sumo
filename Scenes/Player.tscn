@@ -10,6 +10,9 @@
 mass = 2.0
 linear_damp = 1.3
 script = ExtResource("1_ut18v")
+playerNum = null
+moveSpeed = null
+tackleSpeed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(5, 5)

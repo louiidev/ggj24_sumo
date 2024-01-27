@@ -44,3 +44,5 @@ playerNum = 1
 [node name="Player" parent="." instance=ExtResource("6_nwdld")]
 position = Vector2(601, 446)
 playerNum = 1
+moveSpeed = 900.0
+tackleSpeed = 1800.0
