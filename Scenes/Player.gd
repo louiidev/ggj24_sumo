@@ -5,6 +5,7 @@ extends RigidBody2D
 @export var deviceId = 0
 @export var is_player = false
 
+var canAttack = true
 var playerMoveDirection = Vector2.ZERO
 var playerLookDirection = Vector2.ZERO
 var lookDirection = 0.0
@@ -76,7 +77,9 @@ func _integrate_forces(state):
 	
 	if !is_player:
 		return
-	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled:
+	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack:
+		get_node("AttackTimer").start()
+		canAttack = false
 		hasTackled = true
 		state.apply_impulse(Vector2.from_angle(rotation) * tackleSpeed)
 
@@ -107,3 +110,8 @@ func scoreUpdate(playerNumIn, scoreIn):
 func scoreLabelReset():
 	$ScoreChange.scale = Vector2(1,1)
 	$ScoreChange.position = Vector2(0,-54)
+
+func _on_attack_timer_timeout():
+	canAttack = true
+	
+	pass

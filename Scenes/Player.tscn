@@ -38,3 +38,8 @@ flip_h = true
 [node name="ScoreChange" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
