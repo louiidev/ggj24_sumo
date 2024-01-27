@@ -1,21 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://dm0ygsrgxenrw"]
+[gd_scene load_steps=6 format=3 uid="uid://dm0ygsrgxenrw"]
 
 [ext_resource type="Script" path="res://Scenes/Player.gd" id="1_ut18v"]
 [ext_resource type="Texture2D" uid="uid://bjl5gevyspfrc" path="res://Assets/yellow_body_circle.png" id="1_y6q1p"]
 [ext_resource type="Texture2D" uid="uid://iap31w80ittw" path="res://Assets/hand_yellow_closed.png" id="2_sokx8"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_542as"]
+bounce = 1.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_kk4rx"]
 
 [node name="Player" type="RigidBody2D"]
 mass = 2.0
-linear_damp = 1.3
+physics_material_override = SubResource("PhysicsMaterial_542as")
+inertia = 1000.0
+continuous_cd = 1
+max_contacts_reported = 1
+contact_monitor = true
+linear_damp = 2.0
 script = ExtResource("1_ut18v")
-playerNum = null
-moveSpeed = null
-tackleSpeed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(2, 2)
+scale = Vector2(5, 5)
 shape = SubResource("CircleShape2D_kk4rx")
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -35,5 +40,10 @@ texture = ExtResource("2_sokx8")
 flip_h = true
 
 [node name="ScoreChange" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+visible = false
+offset_left = -1.0
+offset_top = -54.0
+offset_right = 39.0
+offset_bottom = -31.0
+theme_override_colors/font_color = Color(0, 0.713726, 0, 1)
+text = "+5"
