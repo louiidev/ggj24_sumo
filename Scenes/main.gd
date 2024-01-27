@@ -6,7 +6,9 @@ var powerup:PackedScene = preload('res://Scenes/Powerup.tscn')
 
 @export var powerupsAtStart = 3
 var player_scene: PackedScene = preload("res://Scenes/Player.tscn")
-
+@onready var boundary: Node2D = $Boundry
+@onready var boundaryShape:CollisionShape2D = $Boundry/StaticBody2D/CollisionShape2D
+@onready var spawnPoints: Node2D = $Boundry/SpawnPoints
 var players: Array[Node2D] = []
 
 # Called when the node enters the scene tree for the first time.
@@ -41,7 +43,7 @@ func add_player(p):
 	player.global_position = Vector2(50, 50)
 	add_child(player)
 	players.push_back(player)
-	
+	player.global_position = spawnPoints.get_child(p['device_id']).global_position
 	
 func init(playerData: Array):
 	for p in playerData:
