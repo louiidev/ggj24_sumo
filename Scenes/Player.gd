@@ -19,7 +19,6 @@ func _ready():
 	lock_rotation = true
 	GameGlobals.updateScore.connect(scoreUpdate)
 
-
 func _process(delta):
 	if !is_player:
 		return
@@ -93,4 +92,3 @@ func scoreUpdate(playerNumIn, scoreIn):
 func scoreLabelReset():
 	$ScoreChange.scale = Vector2(1,1)
 	$ScoreChange.position = Vector2(0,-54)
-
