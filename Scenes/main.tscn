@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://ceye383gobb3v" path="res://images/Wood_06-128x128.png" id="2_bl537"]
 [ext_resource type="PackedScene" uid="uid://c1aa4vl6psaxn" path="res://Scenes/king_of_the_hill.tscn" id="2_fj1ka"]
 [ext_resource type="Texture2D" uid="uid://c2vxlcxi73v46" path="res://images/paint circle.png" id="3_fpuyr"]
-[ext_resource type="PackedScene" uid="uid://buv8l4xkew1po" path="res://Scenes/test_player.tscn" id="3_o8udx"]
 [ext_resource type="PackedScene" uid="uid://dm0ygsrgxenrw" path="res://Scenes/Player.tscn" id="6_nwdld"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w8twd"]

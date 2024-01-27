@@ -13,8 +13,8 @@ var device_id: int = 0;
 @onready var label: Label = $Vbox/Label
 @onready var texture_rect: TextureRect = $Vbox/Texture
 
+
 func set_portrait():
-	print("res://images/portraits/" + portrait_paths[device_id])
 	var image = Image.load_from_file("res://images/portraits/" + portrait_paths[device_id])
 	var texture = ImageTexture.create_from_image(image)
 	texture_rect.texture = texture
@@ -36,6 +36,5 @@ func player_connected(color: String, id: int):
 	self.add_theme_stylebox_override("panel", stylebox)
 	label.text = "Player " + str(device_id + 1)
 	
+	
 
-	
-	
