@@ -92,6 +92,7 @@ func _integrate_forces(state):
 		canAttack = false
 		hasTackled = true
 		state.apply_impulse(Vector2.from_angle(rotation) * tackleSpeed)
+		$Attack.play()
 
 func handlePowerup(powerupType):
 	match powerupType:
@@ -131,3 +132,6 @@ func tickProcess():
 		speedBoostSeconds -=1
 	if(stuckBoostSeconds > 0):
 		stuckBoostSeconds -=1
+
+func onCollision(_bodyIn):
+	$Collision.play()
