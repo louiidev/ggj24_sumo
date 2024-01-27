@@ -11,3 +11,4 @@
 	2 - powerups
 	3 - obsticles
 
+Sumo Mania - Is a fast paced chaotic 2d local multiplayer party game where players sturggle to hold a key position in the ring to get the highest score before the time runs out.
