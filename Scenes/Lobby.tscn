@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxk0q47eeige5"]
+[gd_scene load_steps=5 format=3 uid="uid://dxk0q47eeige5"]
 
 [ext_resource type="Script" path="res://Scripts/LobbyController.gd" id="1_lepxv"]
-[ext_resource type="PackedScene" uid="uid://cv30g1dlnnovs" path="res://Scenes/PlayerSelectItem.tscn" id="2_7tlp3"]
+[ext_resource type="Texture2D" uid="uid://dkf5vgofreovg" path="res://logo.png" id="2_y1sw5"]
+
+[sub_resource type="Theme" id="Theme_3qb2l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4u6o"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_lepxv")
@@ -11,27 +16,31 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1267.0
 offset_bottom = 726.0
+theme = SubResource("Theme_3qb2l")
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 0
+offset_right = 1284.0
+offset_bottom = 719.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_o4u6o")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+layout_mode = 0
+offset_top = -50.0
+offset_right = 1280.0
+offset_bottom = 350.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/CenterContainer"]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 2
+texture = ExtResource("2_y1sw5")
+expand_mode = 3
+stretch_mode = 4
 
 [node name="PlayerSelectContainer" type="HBoxContainer" parent="UI"]
-custom_minimum_size = Vector2(100, 100)
 layout_direction = 2
 layout_mode = 0
-offset_right = 1275.0
-offset_bottom = 310.0
-alignment = 1
-
-[node name="Panel" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
-visible = false
-layout_mode = 2
-
-[node name="Panel2" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
-visible = false
-layout_mode = 2
-
-[node name="Panel3" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
-visible = false
-layout_mode = 2
-
-[node name="Panel4" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
-visible = false
-layout_mode = 2
+offset_top = 324.0
+offset_right = 1280.0
+offset_bottom = 724.0
+alignment = 2

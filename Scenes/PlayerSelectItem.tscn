@@ -1,24 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://cv30g1dlnnovs"]
+[gd_scene load_steps=5 format=3 uid="uid://cv30g1dlnnovs"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerSelectItem.gd" id="1_dk4yh"]
+[ext_resource type="Texture2D" uid="uid://bnctjij5xkpqh" path="res://images/portraits/orange.jpg" id="2_1dydo"]
 
 [sub_resource type="Theme" id="Theme_4mn2u"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ioylo"]
 
 [node name="Panel" type="Panel"]
-offset_right = 157.0
-offset_bottom = 125.0
+offset_right = 286.0
+offset_bottom = 418.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_4mn2u")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ioylo")
 script = ExtResource("1_dk4yh")
 
-[node name="Label" type="Label" parent="."]
+[node name="Vbox" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 98.0
-offset_right = 67.0
-offset_bottom = 121.0
-text = "Player 1"
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Texture" type="TextureRect" parent="Vbox"]
+layout_mode = 2
+texture = ExtResource("2_1dydo")
+expand_mode = 4
+
+[node name="Label" type="Label" parent="Vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "PRESS START TO JOIN
+NPC"
