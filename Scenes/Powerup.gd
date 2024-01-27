@@ -58,5 +58,10 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
+
+func onPlayerTouch():
+	$Label.visible = true
+	var tween = get_tree().create_tween()
+	tween.tween_property($Label,"scale",5,2)
