@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dikp2l3gvbj8g"]
+[gd_scene load_steps=11 format=3 uid="uid://dikp2l3gvbj8g"]
 
-[ext_resource type="PackedScene" uid="uid://coyahvy30jw4g" path="res://Scenes/player_scores.tscn" id="1_70kyn"]
+[ext_resource type="PackedScene" uid="uid://dk73d00m8s47q" path="res://Scenes/player_scores.tscn" id="1_70kyn"]
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_appyy"]
 [ext_resource type="Texture2D" uid="uid://ceye383gobb3v" path="res://images/Wood_06-128x128.png" id="2_bl537"]
 [ext_resource type="PackedScene" uid="uid://c1aa4vl6psaxn" path="res://Scenes/king_of_the_hill.tscn" id="2_fj1ka"]
@@ -17,6 +17,12 @@ sources/1 = SubResource("TileSetAtlasSource_w8twd")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_du6i0"]
 radius = 240.0
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_02vi5"]
+b = Vector2(2.08165e-12, 722)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_hblfi"]
+b = Vector2(1280, 2.08165e-12)
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_appyy")
@@ -61,5 +67,29 @@ position = Vector2(630, 360)
 
 [node name="SecondPassed" type="Timer" parent="."]
 autostart = true
+
+[node name="Borders" type="Node2D" parent="."]
+
+[node name="WestBorder" type="StaticBody2D" parent="Borders"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WestBorder"]
+shape = SubResource("SegmentShape2D_02vi5")
+
+[node name="EastBorder" type="StaticBody2D" parent="Borders"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/EastBorder"]
+position = Vector2(1280, -1)
+shape = SubResource("SegmentShape2D_02vi5")
+
+[node name="NorthBorder" type="StaticBody2D" parent="Borders"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/NorthBorder"]
+shape = SubResource("SegmentShape2D_hblfi")
+
+[node name="SouthBorder" type="StaticBody2D" parent="Borders"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/SouthBorder"]
+position = Vector2(0, 722)
+shape = SubResource("SegmentShape2D_hblfi")
 
 [connection signal="timeout" from="SecondPassed" to="." method="_on_second_passed_timeout"]
