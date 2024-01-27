@@ -53,3 +53,5 @@ playerNum = 1
 deviceId = 1
 moveSpeed = 900.0
 tackleSpeed = 1800.0
+moveSpeed = 900.0
+tackleSpeed = 1800.0

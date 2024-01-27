@@ -30,7 +30,7 @@ func init(device_id: int, is_computer: bool):
 	deviceId = device_id
 	is_cpu = is_computer
 
-func look_follow(state: PhysicsDirectBodyState2D, current_transform: Transform2D, target_position: Vector2):
+func look_follow(state: PhysicsDirectBodyState2D, current_transform: Transform2D, target_position: Vector2) -> void:
 	var speed = 0.1
 	var forward_local_axis: Vector2 = Vector2(1, 0)
 	var forward_dir: Vector2 = (current_transform.basis_xform(forward_local_axis)).normalized()
@@ -48,11 +48,12 @@ func _physics_process(delta):
 		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_RIGHT_Y), 0.2)
 	)
 	
-	print_debug(playerLookDirection)
 	playerMoveDirection = Vector2(
 		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_X), 0.3),
 		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_Y) ,0.3)
 	)
+	
+	look_at(position + playerLookDirection)
 
 func _integrate_forces(state):
 	state.apply_force(playerMoveDirection * moveSpeed)
