@@ -20,3 +20,6 @@ func addPowerup():
 	
 	add_child(newPowerup)
 	
+func secondPast():
+	GameGlobals.countDown -= 1
+	GameGlobals.updateCountdown.emit()
