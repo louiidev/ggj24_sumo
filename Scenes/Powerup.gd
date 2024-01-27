@@ -51,16 +51,14 @@ var food_files = [
 "98_sushi_dish.png",
 "51_giantgummybear_dish.png"]
 
-enum powerupType {SCORE,DUD,REVERSE_SCORE,SPEED_PLAYER}
-
-var type:powerupType = powerupType.DUD
+var type:GameGlobals.powerupType = GameGlobals.powerupType.DUD
 
 @export var timeToLive = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Dish.texture = load('images/food/' + food_files.pick_random())
-	type = powerupType.values().pick_random()
+	type = GameGlobals.powerupType.values().pick_random()
 	GameGlobals.updateCountdown.connect(updateCountdown)
 
 func updateCountdown():
@@ -70,19 +68,26 @@ func updateCountdown():
 
 func onPlayerTouch(objIn):
 	match type:
-		powerupType.SCORE:
+		GameGlobals.powerupType.SCORE:
 			GameGlobals.playerScores[objIn.deviceId] += 10
 			GameGlobals.updateScore.emit(objIn.deviceId, 10)
 			$Label.text = '10 Points'
-		powerupType.DUD:
+		GameGlobals.powerupType.DUD:
 			$Label.text = 'Bad luck!'
-		powerupType.REVERSE_SCORE:
+		GameGlobals.powerupType.REVERSE_SCORE:
 			$Label.text = 'King loser'
-			GameGlobals.powerupTrigger.emit(powerupType.REVERSE_SCORE)
-		powerupType.SPEED_PLAYER:
+			GameGlobals.powerupTrigger.emit(GameGlobals.powerupType.REVERSE_SCORE)
+		GameGlobals.powerupType.SPEED_PLAYER:
 			$Label.text = 'Need for speed'
-			print(objIn)
-			objIn.handlePowerup(powerupType.SPEED_PLAYER)
+			objIn.handlePowerup(GameGlobals.powerupType.SPEED_PLAYER)
+		GameGlobals.powerupType.MUD:
+			$Label.text = 'Stuck in the mud'
+			GameGlobals.powerupTrigger.emit(GameGlobals.powerupType.MUD)
+			objIn.stuckBoostSeconds = 0
+		GameGlobals.powerupType.TELEPORT:
+			$Label.text = 'Suprise!'
+			GameGlobals.powerupTrigger.emit(GameGlobals.powerupType.TELEPORT)
+			
 			
 	$Label.visible = true
 	var tween = get_tree().create_tween()

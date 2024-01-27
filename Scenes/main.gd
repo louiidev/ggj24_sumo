@@ -15,7 +15,8 @@ var players: Array[Node2D] = []
 func _ready():
 	for num in powerupsAtStart:
 		addPowerup()
-		
+	GameGlobals.powerupTrigger.connect(handlePowerup)
+	
 	#if players.size() == 0:
 		# FOR TESTING (REMOVE ONCE DONE)
 		#add_player({ 'device_id': 0, 'is_real_player': true })
@@ -34,7 +35,7 @@ func addPowerup():
 func secondPast():
 	GameGlobals.countDown -= 1
 	GameGlobals.updateCountdown.emit()
-	if(GameGlobals.countDown % 5 ==0):
+	if(GameGlobals.countDown % 2 ==0):
 		addPowerup()
 	
 	
@@ -50,8 +51,15 @@ func init(playerData: Array):
 	for p in playerData:
 		add_player(p)
 	
-
-
 func _on_second_passed_timeout():
 	secondPast()
-	pass # Replace with function body.
+
+func handlePowerup(typeIn):
+	match typeIn:
+		GameGlobals.powerupType.TELEPORT:
+			for p in players:
+				var r = boundsRadius * sqrt(randf())
+				var theta = randf() * 2 * PI
+				p.position.x = $Boundry.position.x + r * cos(theta)
+				p.position.y = $Boundry.position.y + r * sin(theta)
+

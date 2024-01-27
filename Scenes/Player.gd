@@ -10,6 +10,7 @@ var playerMoveDirection = Vector2.ZERO
 var playerLookDirection = Vector2.ZERO
 var lookDirection = 0.0
 var speedBoostSeconds = 0
+var stuckBoostSeconds = 0
 
 var hasTackled: bool = false;
 
@@ -27,13 +28,14 @@ func set_sprite():
 	var texture = ImageTexture.create_from_image(image)
 	body.texture = texture
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	gravity_scale = 0.0
 	lock_rotation = true
 	GameGlobals.updateScore.connect(scoreUpdate)
 	set_sprite()
+	GameGlobals.updateCountdown.connect(tickProcess)
+	GameGlobals.powerupTrigger.connect(handlePowerup)
 
 func _process(delta):
 	if !is_player:
@@ -76,7 +78,12 @@ func _physics_process(delta):
 		$Labels.rotation = rotation * -1
 
 func _integrate_forces(state):
-	state.apply_force(playerMoveDirection * moveSpeed)
+	var boostMultiplier = 1
+	if(speedBoostSeconds > 0):
+		boostMultiplier = boostMultiplier * 2.5
+	if(stuckBoostSeconds > 0):
+		boostMultiplier = boostMultiplier * 0.4
+	state.apply_force(playerMoveDirection * moveSpeed * boostMultiplier)
 	
 	if !is_player:
 		return
@@ -88,8 +95,10 @@ func _integrate_forces(state):
 
 func handlePowerup(powerupType):
 	match powerupType:
-		3: #SPEED_PLAYER
-			speedBoostSeconds = 3
+		GameGlobals.powerupType.SPEED_PLAYER:
+			speedBoostSeconds = 5
+		GameGlobals.powerupType.MUD:
+			stuckBoostSeconds = 5
 			
 func scoreUpdate(playerNumIn, scoreIn):
 	if(deviceId == playerNumIn):
@@ -116,3 +125,9 @@ func scoreLabelReset():
 
 func _on_attack_timer_timeout():
 	canAttack = true
+	
+func tickProcess():
+	if(speedBoostSeconds > 0):
+		speedBoostSeconds -=1
+	if(stuckBoostSeconds > 0):
+		stuckBoostSeconds -=1
