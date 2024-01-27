@@ -34,6 +34,7 @@ func scoreNow():
 		reverseScoreTimes -= 1
 	
 	for body in bodiesScoring:
-		GameGlobals.playerScores[body.playerNum] += score
-		GameGlobals.updateScore.emit(body.playerNum, score)
+		print(body.deviceId, "DEVICE ID")
+		GameGlobals.playerScores[body.deviceId] += score
+		GameGlobals.updateScore.emit(body.deviceId, score)
 	bodiesScoring = bodiesIn

@@ -29,9 +29,14 @@ func secondPast():
 		addPowerup()
 	
 	
-func init():
+func init(playerData: Array):
+	for p in playerData:
+		var player: Node2D = player_scene.instantiate()
+		player.init(p['device_id'], p['is_real_player'])
+		player.global_position = Vector2(50, 50)
+		add_child(player)
+			
 	
-	pass
 
 
 func _on_second_passed_timeout():

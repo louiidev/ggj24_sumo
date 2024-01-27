@@ -4,6 +4,7 @@ enum { PLAYER_1 = 0, PLAYER_2 = 1, PLAYER_3 = 2, PLAYER_4 = 3}
 
 
 var player_panels: Array[Panel] = [null, null, null, null]
+var are_players_human: Array[bool] = [false, false, false, false]
 var player_select_item = preload("res://Scenes/PlayerSelectItem.tscn")
 
 @onready var UI: Control = $UI
@@ -43,6 +44,7 @@ func handle_controller_input():
 	check_start_game()
 	for i in player_panels.size():
 		if Input.is_joy_known(i) and Input.is_joy_button_pressed(i, JOY_BUTTON_START):
+			are_players_human[i] = true
 			join_player(i)
 
 func _joy_connection_changed(device: int, connected: bool):
@@ -51,7 +53,15 @@ func _joy_connection_changed(device: int, connected: bool):
 func start_game():
 	var scene = main_scene.instantiate()
 	get_tree().root.add_child(scene)
-	scene.init()
+	var playerData = []
+	for i in are_players_human.size():
+		playerData.push_front(
+			{
+				'is_real_player': are_players_human[i],
+				'device_id': i
+			}
+		)
+	scene.init(playerData)
 	get_node("/root/Lobby").hide()
 	enabled = false
 	pass

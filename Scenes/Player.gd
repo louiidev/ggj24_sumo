@@ -1,10 +1,9 @@
 extends RigidBody2D
 
-@export var playerNum = 0
 @export var moveSpeed:float = 900
 @export var tackleSpeed:float = 1800
 @export var deviceId = 0
-@export var is_cpu = false
+@export var is_player = false
 
 var playerMoveDirection = Vector2.ZERO
 var playerLookDirection = Vector2.ZERO
@@ -19,16 +18,17 @@ func _ready():
 	gravity_scale = 0.0
 	lock_rotation = true
 	GameGlobals.updateScore.connect(scoreUpdate)
-	print_debug(Input.get_connected_joypads())
 
 
 func _process(delta):
+	if !is_player:
+		return
 	if hasTackled && Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
 		hasTackled = false
 
-func init(device_id: int, is_computer: bool):
+func init(device_id: int, is_real_player: bool):
 	deviceId = device_id
-	is_cpu = is_computer
+	is_player = is_real_player
 
 func look_follow(state: PhysicsDirectBodyState2D, current_transform: Transform2D, target_position: Vector2) -> void:
 	var speed = 0.1
@@ -43,6 +43,8 @@ func joy_deadzone(axis: float, deadzone: float = 0.2):
 	return axis if(!(axis < deadzone && axis > -deadzone)) else 0
 
 func _physics_process(delta):
+	if !is_player:
+		return
 	playerLookDirection = Vector2(
 		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_RIGHT_X), 0.2),
 		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_RIGHT_Y), 0.2)
@@ -58,6 +60,8 @@ func _physics_process(delta):
 func _integrate_forces(state):
 	state.apply_force(playerMoveDirection * moveSpeed)
 	
+	if !is_player:
+		return
 	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled:
 		hasTackled = true
 		state.apply_impulse(Vector2.from_angle(rotation) * tackleSpeed)
@@ -68,7 +72,7 @@ func handlePowerup(powerupType):
 			speedBoostSeconds = 3
 			
 func scoreUpdate(playerNumIn, scoreIn):
-	if(playerNum == playerNumIn):
+	if(deviceId == playerNumIn):
 		var scoreStr = str(scoreIn)
 		if(scoreIn > 0):
 			scoreStr = '+'+scoreStr
