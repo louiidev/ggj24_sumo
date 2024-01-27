@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxk0q47eeige5"]
+[gd_scene load_steps=3 format=3 uid="uid://dxk0q47eeige5"]
 
 [ext_resource type="Script" path="res://Scripts/LobbyController.gd" id="1_lepxv"]
+[ext_resource type="PackedScene" uid="uid://cv30g1dlnnovs" path="res://Scenes/PlayerSelectItem.tscn" id="2_7tlp3"]
 
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_lepxv")
@@ -8,16 +9,29 @@ script = ExtResource("1_lepxv")
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1267.0
+offset_bottom = 726.0
 
-[node name="Panel" type="Panel" parent="UI"]
+[node name="PlayerSelectContainer" type="HBoxContainer" parent="UI"]
+custom_minimum_size = Vector2(100, 100)
+layout_direction = 2
 layout_mode = 0
-offset_right = 115.0
-offset_bottom = 96.0
+offset_right = 1275.0
+offset_bottom = 310.0
+alignment = 1
 
-[node name="Label" type="Label" parent="UI/Panel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Player 1"
+[node name="Panel" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
+visible = false
+layout_mode = 2
+
+[node name="Panel2" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
+visible = false
+layout_mode = 2
+
+[node name="Panel3" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
+visible = false
+layout_mode = 2
+
+[node name="Panel4" parent="UI/PlayerSelectContainer" instance=ExtResource("2_7tlp3")]
+visible = false
+layout_mode = 2
