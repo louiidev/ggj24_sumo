@@ -46,4 +46,12 @@ playerNum = 1
 [node name="SecondPassed" type="Timer" parent="."]
 autostart = true
 
+<<<<<<< HEAD
 [connection signal="timeout" from="SecondPassed" to="." method="secondPast"]
+=======
+
+[node name="Player2" parent="." instance=ExtResource("6_nwdld")]
+position = Vector2(601, 446)
+playerNum = 1
+deviceId = 1
+>>>>>>> 3853e1b3859155ec21522fd98bb2e9a822c034c9

@@ -8,7 +8,8 @@
 
 [node name="Player" type="RigidBody2D"]
 mass = 2.0
-linear_damp = 1.3
+inertia = 1000.0
+linear_damp = 2.0
 script = ExtResource("1_ut18v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
