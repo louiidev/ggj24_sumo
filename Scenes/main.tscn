@@ -51,3 +51,8 @@ tackleSpeed = 1800.0
 autostart = true
 [connection signal="timeout" from="SecondPassed" to="." method="secondPast"]
 
+
+[node name="Player2" parent="." instance=ExtResource("6_nwdld")]
+position = Vector2(601, 446)
+playerNum = 1
+deviceId = 1
