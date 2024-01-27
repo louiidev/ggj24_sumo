@@ -30,4 +30,10 @@ func secondPast():
 	
 	
 func init():
+	
 	pass
+
+
+func _on_second_passed_timeout():
+	secondPast()
+	pass # Replace with function body.

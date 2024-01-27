@@ -8,12 +8,14 @@
 
 [node name="Player" type="RigidBody2D"]
 mass = 2.0
-inertia = 1000.0
-linear_damp = 2.0
+linear_damp = 1.3
 script = ExtResource("1_ut18v")
+playerNum = null
+moveSpeed = null
+tackleSpeed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(5, 5)
+scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_kk4rx")
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -33,10 +35,5 @@ texture = ExtResource("2_sokx8")
 flip_h = true
 
 [node name="ScoreChange" type="Label" parent="."]
-visible = false
-offset_left = -1.0
-offset_top = -54.0
-offset_right = 39.0
-offset_bottom = -31.0
-theme_override_colors/font_color = Color(0, 0.713726, 0, 1)
-text = "+5"
+offset_right = 40.0
+offset_bottom = 23.0

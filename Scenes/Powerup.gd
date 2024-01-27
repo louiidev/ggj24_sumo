@@ -81,6 +81,7 @@ func onPlayerTouch(objIn):
 			GameGlobals.powerupTrigger.emit(powerupType.REVERSE_SCORE)
 		powerupType.SPEED_PLAYER:
 			$Label.text = 'Need for speed'
+			print(objIn)
 			objIn.handlePowerup(powerupType.SPEED_PLAYER)
 			
 	$Label.visible = true

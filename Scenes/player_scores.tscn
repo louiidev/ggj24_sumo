@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://coyahvy30jw4g"]
+[gd_scene load_steps=3 format=3 uid="uid://dk73d00m8s47q"]
 
 [ext_resource type="Script" path="res://Scenes/player_scores.gd" id="1_0x6i3"]
 [ext_resource type="AudioStream" uid="uid://dek4lcu0g7ptp" path="res://Assets/sound/blipSelect.wav" id="2_80pq2"]
