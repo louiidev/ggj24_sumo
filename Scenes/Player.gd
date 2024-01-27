@@ -12,12 +12,27 @@ var speedBoostSeconds = 0
 
 var hasTackled: bool = false;
 
+var portrait_paths = [
+	"green",
+	"red",
+	"yellow",
+	"purple"
+]
+
+@onready var body: Sprite2D = $Node2D/Body
+
+func set_sprite():
+	var image = Image.load_from_file("res://Assets/" + portrait_paths[deviceId] + "_body_circle.png")
+	var texture = ImageTexture.create_from_image(image)
+	body.texture = texture
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	gravity_scale = 0.0
 	lock_rotation = true
 	GameGlobals.updateScore.connect(scoreUpdate)
+	set_sprite()
 
 func _process(delta):
 	if !is_player:
