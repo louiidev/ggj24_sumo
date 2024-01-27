@@ -1,12 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxk0q47eeige5"]
+[gd_scene load_steps=8 format=3 uid="uid://dxk0q47eeige5"]
 
 [ext_resource type="Script" path="res://Scripts/LobbyController.gd" id="1_lepxv"]
 [ext_resource type="Texture2D" uid="uid://dkf5vgofreovg" path="res://logo.png" id="2_y1sw5"]
+[ext_resource type="Texture2D" uid="uid://dmxvbswb4turr" path="res://images/inputs/xbox_button_color_b.png" id="3_516lj"]
+[ext_resource type="Texture2D" uid="uid://d2b8ybpmp420b" path="res://images/inputs/xbox_button_color_a.png" id="4_kve6y"]
 
 [sub_resource type="Theme" id="Theme_3qb2l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4u6o"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8ajk"]
+bg_color = Color(0.831373, 0.721569, 0.360784, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 1, 1, 1)
 
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_lepxv")
@@ -44,3 +54,56 @@ offset_top = 324.0
 offset_right = 1280.0
 offset_bottom = 724.0
 alignment = 2
+
+[node name="StartGamePanel" type="Panel" parent="UI"]
+visible = false
+layout_mode = 0
+offset_left = 303.0
+offset_top = 157.0
+offset_right = 937.0
+offset_bottom = 583.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_s8ajk")
+
+[node name="Title" type="Label" parent="UI/StartGamePanel"]
+layout_mode = 0
+offset_right = 632.0
+offset_bottom = 282.0
+theme_override_font_sizes/font_size = 80
+text = "Start Game?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="HBoxContainer" parent="UI/StartGamePanel"]
+layout_mode = 2
+offset_left = 450.0
+offset_top = 350.0
+offset_right = 586.0
+offset_bottom = 414.0
+
+[node name="No" type="Label" parent="UI/StartGamePanel/Control2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "NO
+"
+
+[node name="TextureRect" type="TextureRect" parent="UI/StartGamePanel/Control2"]
+layout_mode = 2
+texture = ExtResource("3_516lj")
+stretch_mode = 4
+
+[node name="Control" type="HBoxContainer" parent="UI/StartGamePanel"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 350.0
+offset_right = 186.0
+offset_bottom = 414.0
+
+[node name="Yes" type="Label" parent="UI/StartGamePanel/Control"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "YES"
+
+[node name="TextureRect" type="TextureRect" parent="UI/StartGamePanel/Control"]
+layout_mode = 2
+texture = ExtResource("4_kve6y")
+stretch_mode = 4
