@@ -123,7 +123,7 @@ func _physics_process(delta):
 	
 	if($Labels/ScoreChange.visible): #If visible score labe should be rotated up
 		$Labels.rotation = rotation * -1
-		
+
 func tackle(state):
 	if stunned:
 		return
@@ -144,6 +144,14 @@ func tackle(state):
 	face.texture = attack_face
 	$Attack.play()
 	
+	get_node("AttackTimer").start()
+	canAttack = false
+	hasTackled = true
+	state.apply_impulse(tackleDirection * tackleSpeed)
+	tackledPressedInFrame = false
+	attack_particle.emitting = true
+	$Attack.play()
+
 func onStopAttack(): 
 	var tween = create_tween()
 	tween.set_parallel(true)
@@ -165,7 +173,7 @@ func _integrate_forces(state):
 	if tackledPressedInFrame:
 		tackle(state)
 
-	if(state.get_contact_count() >= 1): 
+	if(state.get_contact_count() > 0): 
 		local_collision_pos = state.get_contact_local_position(0)
 
 func handlePowerup(powerupType):
@@ -200,6 +208,7 @@ func scoreLabelReset():
 
 func _on_attack_timer_timeout():
 	canAttack = true
+	hasTackled = false
 	onStopAttack()
 	
 func tickProcess():
@@ -209,25 +218,22 @@ func tickProcess():
 		stuckBoostSeconds -=1
 
 func onCollision(body):
-	$Collision.play()
 	if body.get_script() != null:
 		# Turn off attack particle on hit
 		attack_particle.emitting = false
-		if !body.canAttack:
+		
+		if !body.hasTackled:
+			hit_particle.global_position = local_collision_pos
+			hit_particle.emitting = true
 			face.texture = hit_face
 			stunned = true
-			
-			hit_particle.position = local_collision_pos
-			hit_particle.emitting = true
-			
-			GameGlobals.shakeCamera.emit(0.2)
-			await get_tree().create_timer(1.0).timeout
+			GameGlobals.shakeCamera.emit(0.4)
+			await get_tree().create_timer(0.1).timeout
 			face.texture = original_face
 			stunned = false
 			ai_target = null
-	
+	$Collision.play()
 
-			
 func find_players() -> Array[Node2D]:
 	return GameGlobals.players
 	
@@ -240,16 +246,11 @@ func find_target():
 
 		if p.global_position.distance_to(self.global_position) < closest:
 			closest = p.global_position.distance_to(self.global_position)
-			print("PLAYER target" + str(p.deviceId))
 			ai_target = p
-	
-	
 
-			
 func ai_update():
 	if ai_target == null:
 		find_target()
-
 	var direction = (ai_target.global_position - global_position).normalized()
 	playerMoveDirection = direction
 	if canAttack and ai_target.global_position.distance_to(self.global_position) <= AI_ATTACK_RANGE:
@@ -258,7 +259,3 @@ func ai_update():
 		ai_target = null
 		playerMoveDirection = Vector2.ZERO
 		canAttack = false
-		
-			
-		
-			
