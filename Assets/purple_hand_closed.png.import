@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iap31w80ittw"
-path="res://.godot/imported/hand_yellow_closed.png-ee4883d25bc3a7bdb3703c53e5493979.ctex"
+uid="uid://cxchf4jdgqyn8"
+path="res://.godot/imported/purple_hand_closed.png-e7beda941a4c0aa303e11f8eba4b723b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/hand_yellow_closed.png"
-dest_files=["res://.godot/imported/hand_yellow_closed.png-ee4883d25bc3a7bdb3703c53e5493979.ctex"]
+source_file="res://Assets/purple_hand_closed.png"
+dest_files=["res://.godot/imported/purple_hand_closed.png-e7beda941a4c0aa303e11f8eba4b723b.ctex"]
 
 [params]
 

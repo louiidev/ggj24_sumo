@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dk73d00m8s47q" path="res://Scenes/player_scores.tscn" id="1_70kyn"]
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_appyy"]
 [ext_resource type="Texture2D" uid="uid://ceye383gobb3v" path="res://images/Wood_06-128x128.png" id="2_bl537"]
-[ext_resource type="PackedScene" uid="uid://c1aa4vl6psaxn" path="res://Scenes/king_of_the_hill.tscn" id="2_fj1ka"]
+[ext_resource type="PackedScene" path="res://Scenes/king_of_the_hill.tscn" id="2_fj1ka"]
 [ext_resource type="Texture2D" uid="uid://c2vxlcxi73v46" path="res://images/paint circle.png" id="3_fpuyr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w8twd"]
