@@ -109,12 +109,6 @@ layout_mode = 2
 texture = ExtResource("4_kve6y")
 stretch_mode = 4
 
-[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_33t8y")
-autoplay = true
-
-[connection signal="finished" from="MenuMusic" to="." method="musicFinished"]
-
 [node name="Label2" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 212.0
@@ -133,3 +127,9 @@ offset_right = 1066.0
 offset_bottom = 307.0
 theme_override_font_sizes/font_size = 100
 text = "KING OF THE HILL"
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_33t8y")
+autoplay = true
+
+[connection signal="finished" from="MenuMusic" to="." method="musicFinished"]

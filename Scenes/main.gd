@@ -2,7 +2,7 @@ extends Node2D
 
 var boundsRadius:float = 300
 
-var powerup:PackedScene = preload('res://Scenes/Powerup.tscn')
+var powerup:PackedScene = preload('res://Scenes/powerup.tscn')
 
 @export var powerupsAtStart = 3
 var player_scene: PackedScene = preload("res://Scenes/Player.tscn")
@@ -13,6 +13,9 @@ var player_scene: PackedScene = preload("res://Scenes/Player.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	GameGlobals.players = []
+	for p in GameGlobals.playerData:
+		add_player(p)	
 	for num in powerupsAtStart:
 		addPowerup()
 	GameGlobals.powerupTrigger.connect(handlePowerup)
@@ -40,7 +43,6 @@ func secondPast():
 		addPowerup()
 	if(GameGlobals.countDown < 0):
 		get_tree().change_scene_to_file("res://Scenes/end_screen.tscn")
-		queue_free()
 	
 	
 func add_player(p):
@@ -50,11 +52,6 @@ func add_player(p):
 	add_child(player)
 	GameGlobals.players.push_back(player)
 	player.global_position = spawnPoints.get_child(p['device_id']).global_position
-	
-func init(playerData: Array):
-	GameGlobals.players = []
-	for p in playerData:
-		add_player(p)
 	
 func _on_second_passed_timeout():
 	secondPast()

@@ -50,8 +50,6 @@ func _joy_connection_changed(device: int, connected: bool):
 	print(str(device)+" "+str(connected))
 	
 func start_game():
-	var scene = main_scene.instantiate()
-	get_tree().root.add_child(scene)
 	var playerData = []
 	for i in are_players_human.size():
 		playerData.push_front(
@@ -60,10 +58,8 @@ func start_game():
 				'device_id': i
 			}
 		)
-	scene.init(playerData)
-	get_node("/root/Lobby").hide()
-	enabled = false
-
+	game_globals.playerData = playerData
+	get_tree().change_scene_to_packed(main_scene)
 
 func check_start_game():
 	if start_game_panel.visible:

@@ -15,6 +15,7 @@ enum powerupType {SCORE,DUD,REVERSE_SCORE,SPEED_PLAYER,MUD,TELEPORT}
 
 
 var players: Array[Node2D] = []
+var playerData = []
 
 func set_player(p: Node2D):
 	players.push_back(p)
