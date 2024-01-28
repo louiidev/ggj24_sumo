@@ -107,3 +107,22 @@ text = "YES"
 layout_mode = 2
 texture = ExtResource("4_kve6y")
 stretch_mode = 4
+
+[node name="Label2" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 172.0
+offset_right = 1070.0
+offset_bottom = 309.0
+theme_override_colors/font_color = Color(0.94902, 0.901961, 0.439216, 1)
+theme_override_font_sizes/font_size = 100
+text = "KING OF THE HILL"
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 170.0
+offset_right = 1066.0
+offset_bottom = 307.0
+theme_override_font_sizes/font_size = 100
+text = "KING OF THE HILL"

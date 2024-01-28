@@ -67,6 +67,8 @@ func updateCountdown():
 		queue_free()
 
 func onPlayerTouch(objIn):
+	if !objIn.has_method("handlePowerup"):
+		return
 	$CollectSound.play()
 	match type:
 		GameGlobals.powerupType.SCORE:
