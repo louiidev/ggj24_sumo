@@ -16,6 +16,7 @@ func _ready():
 	for num in powerupsAtStart:
 		addPowerup()
 	GameGlobals.powerupTrigger.connect(handlePowerup)
+	$HudScores.show()
 	
 	#if players.size() == 0:
 		# FOR TESTING (REMOVE ONCE DONE)
@@ -37,6 +38,9 @@ func secondPast():
 	GameGlobals.updateCountdown.emit()
 	if(GameGlobals.countDown % 2 ==0):
 		addPowerup()
+	if(GameGlobals.countDown < 0):
+		get_tree().change_scene_to_file("res://Scenes/end_screen.tscn")
+		queue_free()
 	
 	
 func add_player(p):

@@ -10,3 +10,7 @@ enum PlayerType { Player, CPU }
 var countDown = 20
 
 enum powerupType {SCORE,DUD,REVERSE_SCORE,SPEED_PLAYER,MUD,TELEPORT}
+
+func reset():
+	playerScores = [0,0,0,0]
+	countDown = 20
