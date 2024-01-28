@@ -87,6 +87,9 @@ func _ready():
 func _process(delta):
 	if hasTackled && Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
 		hasTackled = false
+		
+	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
+		onStopAttack()
 	
 	if is_player:
 		tackledPressedInFrame = Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack
@@ -165,12 +168,6 @@ func _integrate_forces(state):
 
 	if(state.get_contact_count() >= 1): 
 		local_collision_pos = state.get_contact_local_position(0)
-	
-	if !stunned and Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack:
-		tackle(state)
-		
-	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
-		onStopAttack()
 
 func handlePowerup(powerupType):
 	match powerupType:
