@@ -18,3 +18,8 @@ var players: Array[Node2D] = []
 
 func set_player(p: Node2D):
 	players.push_back(p)
+
+func reset():
+	playerScores = [0,0,0,0]
+	countDown = 20
+	players = []

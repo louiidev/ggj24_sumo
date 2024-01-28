@@ -55,7 +55,6 @@ func set_sprite():
 	right_hand.texture = hand_texture
 	left_hand.texture = hand_texture
 	
-	
 	var face_texture = load("res://Assets/faces/face_" + faces[deviceId] + ".png")
 	face.texture = face_texture
 	original_face = face_texture
@@ -117,6 +116,7 @@ func tackle(state):
 	hasTackled = true
 	state.apply_impulse(tackleDirection * tackleSpeed)
 	tackledPressedInFrame = false
+	$Attack.play()
 
 func _integrate_forces(state):
 	var boostMultiplier = 1
@@ -167,6 +167,9 @@ func tickProcess():
 		speedBoostSeconds -=1
 	if(stuckBoostSeconds > 0):
 		stuckBoostSeconds -=1
+
+func onCollision(_bodyIn):
+	$Collision.play()
 
 func _on_body_entered(body):
 	if body.get_script() != null:

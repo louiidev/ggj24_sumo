@@ -67,6 +67,7 @@ func updateCountdown():
 		queue_free()
 
 func onPlayerTouch(objIn):
+	$CollectSound.play()
 	match type:
 		GameGlobals.powerupType.SCORE:
 			GameGlobals.playerScores[objIn.deviceId] += 10
@@ -74,6 +75,7 @@ func onPlayerTouch(objIn):
 			$Label.text = '10 Points'
 		GameGlobals.powerupType.DUD:
 			$Label.text = 'Bad luck!'
+			objIn.handlePowerup(GameGlobals.powerupType.MUD)
 		GameGlobals.powerupType.REVERSE_SCORE:
 			$Label.text = 'King loser'
 			GameGlobals.powerupTrigger.emit(GameGlobals.powerupType.REVERSE_SCORE)

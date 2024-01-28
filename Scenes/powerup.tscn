@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dce1x1fl6mfia"]
+[gd_scene load_steps=8 format=3 uid="uid://dce1x1fl6mfia"]
 
 [ext_resource type="Script" path="res://Scenes/Powerup.gd" id="1_gkr6q"]
 [ext_resource type="Texture2D" uid="uid://dk0lxr548tkx1" path="res://images/food/16_burger_dish.png" id="2_gcyjt"]
+[ext_resource type="AudioStream" uid="uid://b2ueijxe6py1w" path="res://Assets/sound/powerUp.wav" id="3_70bl7"]
 
 [sub_resource type="Animation" id="Animation_kiy75"]
 length = 0.001
@@ -72,5 +73,8 @@ offset_top = -15.0
 offset_right = 42.0
 offset_bottom = 8.0
 text = "Powerup!"
+
+[node name="CollectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_70bl7")
 
 [connection signal="body_entered" from="Area2D" to="." method="onPlayerTouch"]

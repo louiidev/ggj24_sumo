@@ -11,8 +11,9 @@ func _ready():
 
 func handlePowerup(powerupType):
 	match powerupType:
-		2: #reverse score
+		GameGlobals.powerupType.REVERSE_SCORE: #reverse score
 			reverseScoreTimes = 3
+			$ScoreBoundryImage.modulate = Color(1,0.5,0.5)
 
 func sumoEntered(bodyIn):
 	if(bodiesIn.find(bodyIn) == -1):
@@ -32,6 +33,8 @@ func scoreNow():
 	if(reverseScoreTimes > 0):
 		score = scoreToAdd * -2
 		reverseScoreTimes -= 1
+		if(reverseScoreTimes < 1):
+			$ScoreBoundryImage.modulate = Color(1,1,1)
 	
 	for body in bodiesScoring:
 		print(body.deviceId, "DEVICE ID")

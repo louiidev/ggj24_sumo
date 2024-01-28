@@ -16,7 +16,6 @@ var player_select_item = preload("res://Scenes/PlayerSelectItem.tscn")
 
 signal on_player_connected(device_id: int)
 
-
 var enabled = true
 
 # Called when the node enters the scene tree for the first time.
@@ -64,7 +63,6 @@ func start_game():
 	scene.init(playerData)
 	get_node("/root/Lobby").hide()
 	enabled = false
-	pass
 
 
 func check_start_game():
