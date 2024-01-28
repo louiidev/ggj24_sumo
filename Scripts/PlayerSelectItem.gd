@@ -15,9 +15,7 @@ var device_id: int = 0;
 
 
 func set_portrait():
-	var image = Image.load_from_file("res://images/portraits/" + portrait_paths[device_id])
-	var texture = ImageTexture.create_from_image(image)
-	texture_rect.texture = texture
+	texture_rect.texture = load("res://images/portraits/" + portrait_paths[device_id])
 
 
 func _ready():

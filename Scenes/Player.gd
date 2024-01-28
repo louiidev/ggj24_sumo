@@ -30,7 +30,7 @@ var faces = [
 	"j"
 ]
 
-@onready var body: Sprite2D = $Node2D/Body
+@onready var body_sprite: Sprite2D = $Node2D/Body
 @onready var right_hand: Sprite2D = $Node2D/RightHand
 @onready var left_hand: Sprite2D = $Node2D/LeftHand
 @onready var face: Sprite2D = $Node2D/Face
@@ -39,22 +39,20 @@ var hit_face: Texture;
 var original_face: Texture;
 
 func set_sprite():
-	var body_image = Image.load_from_file("res://Assets/" + portrait_paths[deviceId] + "_body_circle.png")
-	var body_texture = ImageTexture.create_from_image(body_image)
-	body.texture = body_texture
+
+	body_sprite.texture = load("res://Assets/" + portrait_paths[deviceId] + "_body_circle.png")
+
+	var hand_texture = load("res://Assets/" + portrait_paths[deviceId] + "_hand_closed.png")
 	
-	var hand_image = Image.load_from_file("res://Assets/" + portrait_paths[deviceId] + "_hand_closed.png")
-	var hand_texture = ImageTexture.create_from_image(hand_image)
 	right_hand.texture = hand_texture
 	left_hand.texture = hand_texture
 	
-	var face_image = Image.load_from_file("res://Assets/faces/face_" + faces[deviceId] + ".png")
-	var face_texture = ImageTexture.create_from_image(face_image)
+	
+	var face_texture = load("res://Assets/faces/face_" + faces[deviceId] + ".png")
 	face.texture = face_texture
 	original_face = face_texture
 	
-	var hit_face_image = Image.load_from_file("res://Assets/faces/face_j.png")
-	hit_face = ImageTexture.create_from_image(hit_face_image)
+	hit_face = load("res://Assets/faces/face_j.png")
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -160,7 +158,8 @@ func _on_body_entered(body):
 		if !body.canAttack and canAttack:
 			face.texture = hit_face
 			stunned = true
-			
+			GameGlobals.shakeCamera.emit(0.4)
+			print("SHAKE FROM PLAYER")
 			await get_tree().create_timer(1.0).timeout
 			face.texture = original_face
 			stunned = false
