@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbj8b57qtu76y"]
+
+[ext_resource type="Texture2D" uid="uid://c6hxrivr2i86v" path="res://images/kenney_particle-pack/PNG (Transparent)/star_08.png" id="1_alq0b"]
+
+[sub_resource type="Curve" id="Curve_sanr0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="HitParticle" type="CPUParticles2D"]
+emitting = false
+amount = 1
+lifetime = 0.5
+one_shot = true
+speed_scale = 5.0
+explosiveness = 1.0
+texture = ExtResource("1_alq0b")
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+angular_velocity_min = 68.32
+angular_velocity_max = 367.88
+scale_amount_curve = SubResource("Curve_sanr0")

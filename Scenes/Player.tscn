@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b01cwwx6ewgsh" path="res://Assets/faces/face_a.png" id="4_uym6b"]
 [ext_resource type="AudioStream" uid="uid://cvxi1d527dy5b" path="res://Assets/sound/laserShoot.wav" id="4_x2k4e"]
 [ext_resource type="AudioStream" uid="uid://b2t0nu5w4bc54" path="res://Assets/sound/explosion.wav" id="5_hrw6o"]
+[ext_resource type="PackedScene" uid="uid://bsdkrbyhcavo0" path="res://Assets/Particles/AttackParticle.tscn" id="5_5r8l1"]
+[ext_resource type="PackedScene" uid="uid://bbj8b57qtu76y" path="res://Assets/Particles/HitParticle.tscn" id="6_glcnr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s8ges"]
 bounce = 1.0
@@ -29,7 +31,7 @@ rotation = 1.5708
 scale = Vector2(0.25, 0.25)
 
 [node name="RightHand" type="Sprite2D" parent="Node2D"]
-position = Vector2(150, 0)
+position = Vector2(150, 2.08165e-12)
 texture = ExtResource("2_8jlyl")
 
 [node name="Body" type="Sprite2D" parent="Node2D"]
@@ -40,12 +42,17 @@ rotation = 3.14159
 texture = ExtResource("4_uym6b")
 
 [node name="LeftHand" type="Sprite2D" parent="Node2D"]
-position = Vector2(-150, 0)
+position = Vector2(-150, 2.08165e-12)
 texture = ExtResource("2_8jlyl")
 flip_h = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="AttackParticle" parent="." instance=ExtResource("5_5r8l1")]
+position = Vector2(-25, 2.08165e-12)
+
+[node name="HitParticle" parent="." instance=ExtResource("6_glcnr")]
 
 [node name="Labels" type="Node2D" parent="."]
 rotation = 0.20944

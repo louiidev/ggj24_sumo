@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsdkrbyhcavo0"]
+
+[ext_resource type="Texture2D" uid="uid://jwk021n0vru1" path="res://images/kenney_particle-pack/PNG (Transparent)/muzzle_05.png" id="1_p0oup"]
+
+[sub_resource type="Curve" id="Curve_4ynwe"]
+_data = [Vector2(0, 0), 0.0, 0.764512, 0, 1, Vector2(1, 0.764512), 0.764512, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_63hsq"]
+offsets = PackedFloat32Array(0, 0.0282486, 0.607345, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 0.611765, 0.0392157, 1, 1, 0.180392, 0.0745098, 1, 1, 1, 1, 0)
+
+[node name="AttackParticle" type="CPUParticles2D"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+emitting = false
+amount = 25
+one_shot = true
+explosiveness = 0.39
+texture = ExtResource("1_p0oup")
+particle_flag_align_y = true
+direction = Vector2(-1, 2.08165e-12)
+spread = 0.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 35.0
+initial_velocity_max = 40.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_4ynwe")
+color = Color(0.917647, 1, 0.635294, 1)
+color_ramp = SubResource("Gradient_63hsq")

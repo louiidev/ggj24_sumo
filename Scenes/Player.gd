@@ -15,6 +15,14 @@ var lookDirection = 0.0
 var speedBoostSeconds = 0
 var stuckBoostSeconds = 0
 
+var attackLerpTime = 0.05
+
+var handRestLocalPosition = Vector2(150, 0)
+var handAttackLocalPosition = Vector2(100, -100)
+
+var faceRestScale = Vector2.ONE
+var faceAttackScale = Vector2(0.85, 1)
+
 var hasTackled: bool = false
 var stunned: bool = false
 
@@ -38,8 +46,13 @@ var faces = [
 @onready var left_hand: Sprite2D = $Node2D/LeftHand
 @onready var face: Sprite2D = $Node2D/Face
 
+@onready var attack_particle: CPUParticles2D = $AttackParticle
+@onready var hit_particle: CPUParticles2D = $HitParticle
+
 var hit_face: Texture;
+var attack_face: Texture;
 var original_face: Texture;
+var local_collision_pos: Vector2
 
 # AI 
 var ai_target: Node2D = null;
@@ -60,12 +73,12 @@ func set_sprite():
 	original_face = face_texture
 	
 	hit_face = load("res://Assets/faces/face_j.png")
+	attack_face = load("res://Assets/faces/face_f.png")
 	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	gravity_scale = 0.0
-	lock_rotation = true
 	GameGlobals.updateScore.connect(scoreUpdate)
 	set_sprite()
 	GameGlobals.updateCountdown.connect(tickProcess)
@@ -74,6 +87,9 @@ func _ready():
 func _process(delta):
 	if hasTackled && Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
 		hasTackled = false
+		
+	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
+		onStopAttack()
 	
 	if is_player:
 		tackledPressedInFrame = Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack
@@ -102,7 +118,8 @@ func _physics_process(delta):
 			joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_Y) ,0.3)
 		)
 	
-	look_at(position + playerLookDirection)
+	if(!stunned):
+		look_at(position + playerLookDirection)
 	
 	if($Labels/ScoreChange.visible): #If visible score labe should be rotated up
 		$Labels.rotation = rotation * -1
@@ -116,7 +133,27 @@ func tackle(state):
 	hasTackled = true
 	state.apply_impulse(tackleDirection * tackleSpeed)
 	tackledPressedInFrame = false
+	attack_particle.emitting = true
 	$Attack.play()
+
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Node2D/Body,"scale", faceAttackScale, attackLerpTime)
+	tween.tween_property($Node2D/LeftHand,"position", handAttackLocalPosition, attackLerpTime)
+	tween.tween_property($Node2D/RightHand,"position", handAttackLocalPosition * Vector2.LEFT, attackLerpTime)
+	tween.play()
+	
+	face.texture = attack_face
+	
+func onStopAttack(): 
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Node2D/Body,"scale", faceRestScale, attackLerpTime)
+	tween.tween_property($Node2D/LeftHand,"position", handRestLocalPosition, attackLerpTime)
+	tween.tween_property($Node2D/RightHand,"position", handRestLocalPosition * Vector2.LEFT, attackLerpTime)
+	tween.play()
+	
+	face.texture = original_face
 
 func _integrate_forces(state):
 	var boostMultiplier = 1
@@ -128,6 +165,9 @@ func _integrate_forces(state):
 	
 	if tackledPressedInFrame:
 		tackle(state)
+
+	if(state.get_contact_count() >= 1): 
+		local_collision_pos = state.get_contact_local_position(0)
 
 func handlePowerup(powerupType):
 	match powerupType:
@@ -161,6 +201,7 @@ func scoreLabelReset():
 
 func _on_attack_timer_timeout():
 	canAttack = true
+	onStopAttack()
 	
 func tickProcess():
 	if(speedBoostSeconds > 0):
@@ -173,9 +214,16 @@ func onCollision(_bodyIn):
 
 func _on_body_entered(body):
 	if body.get_script() != null:
+		# Turn off attack particle on hit
+		attack_particle.emitting = false
 		if !body.canAttack and canAttack:
 			face.texture = hit_face
 			stunned = true
+			
+			var collision_position = local_collision_pos
+			hit_particle.position = collision_position
+			hit_particle.emitting = true
+			
 			GameGlobals.shakeCamera.emit(0.4)
 			await get_tree().create_timer(1.0).timeout
 			face.texture = original_face
