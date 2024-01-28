@@ -12,7 +12,8 @@ var lookDirection = 0.0
 var speedBoostSeconds = 0
 var stuckBoostSeconds = 0
 
-var hasTackled: bool = false;
+var hasTackled: bool = false
+var stunned: bool = false
 
 var portrait_paths = [
 	"green",
@@ -21,12 +22,37 @@ var portrait_paths = [
 	"purple"
 ]
 
-@onready var body: Sprite2D = $Node2D/Body
+var faces = [
+	"c",
+	"e",
+	"g",
+	"i",
+	"j"
+]
+
+@onready var body_sprite: Sprite2D = $Node2D/Body
+@onready var right_hand: Sprite2D = $Node2D/RightHand
+@onready var left_hand: Sprite2D = $Node2D/LeftHand
+@onready var face: Sprite2D = $Node2D/Face
+
+var hit_face: Texture;
+var original_face: Texture;
 
 func set_sprite():
-	var image = Image.load_from_file("res://Assets/" + portrait_paths[deviceId] + "_body_circle.png")
-	var texture = ImageTexture.create_from_image(image)
-	body.texture = texture
+
+	body_sprite.texture = load("res://Assets/" + portrait_paths[deviceId] + "_body_circle.png")
+
+	var hand_texture = load("res://Assets/" + portrait_paths[deviceId] + "_hand_closed.png")
+	
+	right_hand.texture = hand_texture
+	left_hand.texture = hand_texture
+	
+	var face_texture = load("res://Assets/faces/face_" + faces[deviceId] + ".png")
+	face.texture = face_texture
+	original_face = face_texture
+	
+	hit_face = load("res://Assets/faces/face_j.png")
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,15 +72,6 @@ func _process(delta):
 func init(device_id: int, is_real_player: bool):
 	deviceId = device_id
 	is_player = is_real_player
-
-func look_follow(state: PhysicsDirectBodyState2D, current_transform: Transform2D, target_position: Vector2) -> void:
-	var speed = 0.1
-	var forward_local_axis: Vector2 = Vector2(1, 0)
-	var forward_dir: Vector2 = (current_transform.basis_xform(forward_local_axis)).normalized()
-	var target_dir: Vector2 = (target_position - current_transform.origin).normalized()
-	var local_speed: float = clampf(speed, 0, acos(forward_dir.dot(target_dir)))
-	if forward_dir.dot(target_dir) > 1e-4:
-		state.angular_velocity = local_speed * forward_dir.cross(target_dir) / state.step
 
 func joy_deadzone(axis: float, deadzone: float = 0.2):
 	return axis if(!(axis < deadzone && axis > -deadzone)) else 0
@@ -78,6 +95,8 @@ func _physics_process(delta):
 		$Labels.rotation = rotation * -1
 
 func _integrate_forces(state):
+	if !is_player or stunned:
+		return
 	var boostMultiplier = 1
 	if(speedBoostSeconds > 0):
 		boostMultiplier = boostMultiplier * 2.5
@@ -85,9 +104,8 @@ func _integrate_forces(state):
 		boostMultiplier = boostMultiplier * 0.4
 	state.apply_force(playerMoveDirection * moveSpeed * boostMultiplier)
 	
-	if !is_player:
-		return
-	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack:
+
+	if !stunned and Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack:
 		get_node("AttackTimer").start()
 		canAttack = false
 		hasTackled = true
@@ -135,3 +153,15 @@ func tickProcess():
 
 func onCollision(_bodyIn):
 	$Collision.play()
+
+func _on_body_entered(body):
+	if body.get_script() != null:
+		if !body.canAttack and canAttack:
+			face.texture = hit_face
+			stunned = true
+			GameGlobals.shakeCamera.emit(0.4)
+			print("SHAKE FROM PLAYER")
+			await get_tree().create_timer(1.0).timeout
+			face.texture = original_face
+			stunned = false
+			

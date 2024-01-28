@@ -19,7 +19,7 @@ func _ready():
 	$HudScores.show()
 	
 	#if players.size() == 0:
-		# FOR TESTING (REMOVE ONCE DONE)
+		#FOR TESTING (REMOVE ONCE DONE)
 		#add_player({ 'device_id': 0, 'is_real_player': true })
 		#add_player({ 'device_id': 1, 'is_real_player': false })
 

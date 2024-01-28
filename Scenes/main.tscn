@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dikp2l3gvbj8g"]
+[gd_scene load_steps=14 format=3 uid="uid://dikp2l3gvbj8g"]
 
 [ext_resource type="PackedScene" uid="uid://dk73d00m8s47q" path="res://Scenes/player_scores.tscn" id="1_70kyn"]
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_appyy"]
 [ext_resource type="Texture2D" uid="uid://ceye383gobb3v" path="res://images/Wood_06-128x128.png" id="2_bl537"]
 [ext_resource type="PackedScene" uid="uid://c1aa4vl6psaxn" path="res://Scenes/king_of_the_hill.tscn" id="2_fj1ka"]
-[ext_resource type="Texture2D" uid="uid://c2vxlcxi73v46" path="res://images/paint circle.png" id="3_fpuyr"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="6_5w1x5"]
+[ext_resource type="Texture2D" uid="uid://b1p6qsf5vfmkd" path="res://Assets/level.png" id="7_ni6l2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w8twd"]
 texture = ExtResource("2_bl537")
@@ -42,7 +43,6 @@ layer_0/tile_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0
 [node name="Boundry" type="Sprite2D" parent="."]
 position = Vector2(627, 359)
 scale = Vector2(1.256, 1.256)
-texture = ExtResource("3_fpuyr")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Boundry"]
 collision_layer = 0
@@ -99,5 +99,14 @@ shape = SubResource("RectangleShape2D_8bfsj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/SouthBorder"]
 position = Vector2(631.5, 835.5)
 shape = SubResource("RectangleShape2D_bkw86")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(638, 360)
+script = ExtResource("6_5w1x5")
+
+[node name="Level" type="Sprite2D" parent="."]
+position = Vector2(619.5, 349.5)
+scale = Vector2(1.70859, 1.7125)
+texture = ExtResource("7_ni6l2")
 
 [connection signal="timeout" from="SecondPassed" to="." method="_on_second_passed_timeout"]

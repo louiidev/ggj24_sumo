@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dm0ygsrgxenrw"]
+[gd_scene load_steps=9 format=3 uid="uid://dm0ygsrgxenrw"]
 
 [ext_resource type="Script" path="res://Scenes/Player.gd" id="1_ut18v"]
 [ext_resource type="Texture2D" uid="uid://bjl5gevyspfrc" path="res://Assets/yellow_body_circle.png" id="1_y6q1p"]
-[ext_resource type="Texture2D" uid="uid://iap31w80ittw" path="res://Assets/hand_yellow_closed.png" id="2_sokx8"]
+[ext_resource type="Texture2D" uid="uid://iap31w80ittw" path="res://Assets/yellow_hand_closed.png" id="2_8jlyl"]
+[ext_resource type="Texture2D" uid="uid://b01cwwx6ewgsh" path="res://Assets/faces/face_a.png" id="4_uym6b"]
 [ext_resource type="AudioStream" uid="uid://cvxi1d527dy5b" path="res://Assets/sound/laserShoot.wav" id="4_x2k4e"]
 [ext_resource type="AudioStream" uid="uid://b2t0nu5w4bc54" path="res://Assets/sound/explosion.wav" id="5_hrw6o"]
 
@@ -29,14 +30,18 @@ scale = Vector2(0.25, 0.25)
 
 [node name="RightHand" type="Sprite2D" parent="Node2D"]
 position = Vector2(150, 0)
-texture = ExtResource("2_sokx8")
+texture = ExtResource("2_8jlyl")
 
 [node name="Body" type="Sprite2D" parent="Node2D"]
 texture = ExtResource("1_y6q1p")
 
+[node name="Face" type="Sprite2D" parent="Node2D"]
+rotation = 3.14159
+texture = ExtResource("4_uym6b")
+
 [node name="LeftHand" type="Sprite2D" parent="Node2D"]
 position = Vector2(-150, 0)
-texture = ExtResource("2_sokx8")
+texture = ExtResource("2_8jlyl")
 flip_h = true
 
 [node name="AttackTimer" type="Timer" parent="."]
@@ -57,4 +62,5 @@ stream = ExtResource("4_x2k4e")
 stream = ExtResource("5_hrw6o")
 
 [connection signal="body_entered" from="." to="." method="onCollision"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
