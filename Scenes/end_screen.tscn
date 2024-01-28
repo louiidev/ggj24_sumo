@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnoeg7ds10eoe"]
+[gd_scene load_steps=8 format=3 uid="uid://bnoeg7ds10eoe"]
 
 [ext_resource type="Script" path="res://Scenes/end_screen.gd" id="1_ainfp"]
 [ext_resource type="Texture2D" uid="uid://dkf5vgofreovg" path="res://logo.png" id="1_c7daw"]
@@ -9,6 +9,11 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m11cp"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_pcnjn"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="EndScreen" type="Control"]
 layout_mode = 3
@@ -138,3 +143,39 @@ text = "Restart"
 layout_mode = 2
 texture = ExtResource("2_uilmr")
 stretch_mode = 4
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+position = Vector2(59, 682)
+amount = 100
+lifetime = 5.0
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 11.34
+direction = Vector2(0.5, -1)
+spread = 35.0
+gravity = Vector2(2.08165e-12, 200)
+initial_velocity_min = 300.0
+initial_velocity_max = 600.0
+scale_amount_min = 3.35
+scale_amount_max = 23.55
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_pcnjn")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(1217, 686)
+amount = 100
+lifetime = 5.0
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 11.34
+direction = Vector2(-0.5, -1)
+spread = 35.0
+gravity = Vector2(2.08165e-12, 200)
+initial_velocity_min = 300.0
+initial_velocity_max = 600.0
+scale_amount_min = 3.35
+scale_amount_max = 23.55
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_pcnjn")
