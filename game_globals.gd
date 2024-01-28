@@ -12,3 +12,9 @@ enum PlayerType { Player, CPU }
 var countDown = 20
 
 enum powerupType {SCORE,DUD,REVERSE_SCORE,SPEED_PLAYER,MUD,TELEPORT}
+
+
+var players: Array[Node2D] = []
+
+func set_player(p: Node2D):
+	players.push_back(p)

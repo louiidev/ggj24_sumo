@@ -5,6 +5,9 @@ extends RigidBody2D
 @export var deviceId = 0
 @export var is_player = false
 
+var tackledPressedInFrame = false
+var tackleDirection = Vector2.ZERO
+
 var canAttack = true
 var playerMoveDirection = Vector2.ZERO
 var playerLookDirection = Vector2.ZERO
@@ -38,6 +41,11 @@ var faces = [
 var hit_face: Texture;
 var original_face: Texture;
 
+# AI 
+var ai_target: Node2D = null;
+var ai_timer: Timer = Timer.new()
+var AI_ATTACK_RANGE = 150.0
+
 func set_sprite():
 
 	body_sprite.texture = load("res://Assets/" + portrait_paths[deviceId] + "_body_circle.png")
@@ -65,10 +73,12 @@ func _ready():
 	GameGlobals.powerupTrigger.connect(handlePowerup)
 
 func _process(delta):
-	if !is_player:
-		return
 	if hasTackled && Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
 		hasTackled = false
+	
+	if is_player:
+		tackledPressedInFrame = Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack
+		tackleDirection = Vector2.from_angle(rotation)
 
 func init(device_id: int, is_real_player: bool):
 	deviceId = device_id
@@ -79,25 +89,36 @@ func joy_deadzone(axis: float, deadzone: float = 0.2):
 
 func _physics_process(delta):
 	if !is_player:
+		ai_update()
 		return
+	
 	playerLookDirection = Vector2(
 		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_RIGHT_X), 0.2),
 		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_RIGHT_Y), 0.2)
 	)
 	
-	playerMoveDirection = Vector2(
-		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_X), 0.3),
-		joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_Y) ,0.3)
-	)
+	if !stunned:
+		playerMoveDirection = Vector2(
+			joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_X), 0.3),
+			joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_Y) ,0.3)
+		)
 	
 	look_at(position + playerLookDirection)
 	
 	if($Labels/ScoreChange.visible): #If visible score labe should be rotated up
 		$Labels.rotation = rotation * -1
+		
+func tackle(state):
+	if stunned:
+		return
+	
+	get_node("AttackTimer").start()
+	canAttack = false
+	hasTackled = true
+	state.apply_impulse(tackleDirection * tackleSpeed)
+	tackledPressedInFrame = false
 
 func _integrate_forces(state):
-	if !is_player or stunned:
-		return
 	var boostMultiplier = 1
 	if(speedBoostSeconds > 0):
 		boostMultiplier = boostMultiplier * 2.5
@@ -105,12 +126,8 @@ func _integrate_forces(state):
 		boostMultiplier = boostMultiplier * 0.4
 	state.apply_force(playerMoveDirection * moveSpeed * boostMultiplier)
 	
-
-	if !stunned and Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack:
-		get_node("AttackTimer").start()
-		canAttack = false
-		hasTackled = true
-		state.apply_impulse(Vector2.from_angle(rotation) * tackleSpeed)
+	if tackledPressedInFrame:
+		tackle(state)
 
 func handlePowerup(powerupType):
 	match powerupType:
@@ -151,8 +168,6 @@ func tickProcess():
 	if(stuckBoostSeconds > 0):
 		stuckBoostSeconds -=1
 
-
-
 func _on_body_entered(body):
 	if body.get_script() != null:
 		if !body.canAttack and canAttack:
@@ -163,4 +178,47 @@ func _on_body_entered(body):
 			await get_tree().create_timer(1.0).timeout
 			face.texture = original_face
 			stunned = false
+			
+			
+			
+func find_players() -> Array[Node2D]:
+	return GameGlobals.players
+	
+func find_target():
+	var players = find_players()
+	var closest: float = INF
+	for p in players:
+		if p.get_instance_id() == self.get_instance_id():
+			continue
+		
+		if p.global_position.distance_to(self.global_position) < closest:
+			closest = p.global_position.distance_to(self.global_position)
+			print("PLAYER target" + str(p.deviceId))
+			ai_target = p
+	
+	
+
+			
+func ai_update():
+	if ai_target == null:
+		find_target()
+		var time = randf_range(3, 10);
+		print(time)
+		ai_timer.start(time)
+		ai_timer.wait_time = 0
+		print(ai_timer.time_left)
+		
+	
+	if ai_timer.is_stopped():
+		var direction = (ai_target.global_position - global_position).normalized()
+		playerMoveDirection = direction
+		if canAttack and ai_target.global_position.distance_to(self.global_position) <= AI_ATTACK_RANGE:
+			tackledPressedInFrame = true
+			tackleDirection = playerMoveDirection
+			print("ATTACKING")
+			ai_target = null
+			ai_timer.stop()
+			playerMoveDirection = Vector2.ZERO
+			
+		
 			

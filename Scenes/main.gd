@@ -9,7 +9,7 @@ var player_scene: PackedScene = preload("res://Scenes/Player.tscn")
 @onready var boundary: Node2D = $Boundry
 @onready var boundaryShape:CollisionShape2D = $Boundry/StaticBody2D/CollisionShape2D
 @onready var spawnPoints: Node2D = $Boundry/SpawnPoints
-var players: Array[Node2D] = []
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,10 +17,10 @@ func _ready():
 		addPowerup()
 	GameGlobals.powerupTrigger.connect(handlePowerup)
 	
-	if players.size() == 0:
+	#if GameGlobals.players.size() == 0:
 		#FOR TESTING (REMOVE ONCE DONE)
-		add_player({ 'device_id': 0, 'is_real_player': true })
-		add_player({ 'device_id': 1, 'is_real_player': false })
+		#add_player({ 'device_id': 0, 'is_real_player': true })
+		#add_player({ 'device_id': 1, 'is_real_player': false })
 
 func addPowerup():
 	var r = boundsRadius * sqrt(randf())
@@ -44,10 +44,11 @@ func add_player(p):
 	player.init(p['device_id'], p['is_real_player'])
 	player.global_position = Vector2(50, 50)
 	add_child(player)
-	players.push_back(player)
+	GameGlobals.players.push_back(player)
 	player.global_position = spawnPoints.get_child(p['device_id']).global_position
 	
 func init(playerData: Array):
+	GameGlobals.players = []
 	for p in playerData:
 		add_player(p)
 	
@@ -57,7 +58,7 @@ func _on_second_passed_timeout():
 func handlePowerup(typeIn):
 	match typeIn:
 		GameGlobals.powerupType.TELEPORT:
-			for p in players:
+			for p in GameGlobals.players:
 				var r = boundsRadius * sqrt(randf())
 				var theta = randf() * 2 * PI
 				p.position.x = $Boundry.position.x + r * cos(theta)
