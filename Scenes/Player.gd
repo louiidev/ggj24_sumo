@@ -38,8 +38,12 @@ var faces = [
 @onready var left_hand: Sprite2D = $Node2D/LeftHand
 @onready var face: Sprite2D = $Node2D/Face
 
+@onready var attack_particle: CPUParticles2D = $AttackParticle
+@onready var hit_particle: CPUParticles2D = $HitParticle
+
 var hit_face: Texture;
 var original_face: Texture;
+var local_collision_pos: Vector2
 
 # AI 
 var ai_target: Node2D = null;
@@ -65,7 +69,6 @@ func set_sprite():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	gravity_scale = 0.0
-	lock_rotation = true
 	GameGlobals.updateScore.connect(scoreUpdate)
 	set_sprite()
 	GameGlobals.updateCountdown.connect(tickProcess)
@@ -102,7 +105,8 @@ func _physics_process(delta):
 			joy_deadzone(Input.get_joy_axis(deviceId, JOY_AXIS_LEFT_Y) ,0.3)
 		)
 	
-	look_at(position + playerLookDirection)
+	if(!stunned):
+		look_at(position + playerLookDirection)
 	
 	if($Labels/ScoreChange.visible): #If visible score labe should be rotated up
 		$Labels.rotation = rotation * -1
@@ -118,6 +122,14 @@ func tackle(state):
 	tackledPressedInFrame = false
 	$Attack.play()
 
+func onAttack(state):
+	get_node("AttackTimer").start()
+	canAttack = false
+	hasTackled = true
+	state.apply_impulse(Vector2.from_angle(rotation) * tackleSpeed)
+	attack_particle.emitting = true
+	$Attack.play()
+
 func _integrate_forces(state):
 	var boostMultiplier = 1
 	if(speedBoostSeconds > 0):
@@ -128,6 +140,8 @@ func _integrate_forces(state):
 	
 	if tackledPressedInFrame:
 		tackle(state)
+	if(state.get_contact_count() >= 1): 
+		local_collision_pos = state.get_contact_local_position(0)
 
 func handlePowerup(powerupType):
 	match powerupType:
@@ -173,9 +187,16 @@ func onCollision(_bodyIn):
 
 func _on_body_entered(body):
 	if body.get_script() != null:
+		# Turn off attack particle on hit
+		attack_particle.emitting = false
 		if !body.canAttack and canAttack:
 			face.texture = hit_face
 			stunned = true
+			
+			var collision_position = local_collision_pos
+			hit_particle.position = collision_position
+			hit_particle.emitting = true
+			
 			GameGlobals.shakeCamera.emit(0.4)
 			await get_tree().create_timer(1.0).timeout
 			face.texture = original_face
