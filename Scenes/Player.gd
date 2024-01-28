@@ -123,7 +123,7 @@ func _physics_process(delta):
 	
 	if($Labels/ScoreChange.visible): #If visible score labe should be rotated up
 		$Labels.rotation = rotation * -1
-		
+
 func tackle(state):
 	if stunned:
 		return
@@ -134,9 +134,7 @@ func tackle(state):
 	state.apply_impulse(tackleDirection * tackleSpeed)
 	tackledPressedInFrame = false
 	attack_particle.emitting = true
-	$Attack.play()
-
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property($Node2D/Body,"scale", faceAttackScale, attackLerpTime)
 	tween.tween_property($Node2D/LeftHand,"position", handAttackLocalPosition, attackLerpTime)
@@ -144,9 +142,18 @@ func tackle(state):
 	tween.play()
 	
 	face.texture = attack_face
+	$Attack.play()
 	
+	get_node("AttackTimer").start()
+	canAttack = false
+	hasTackled = true
+	state.apply_impulse(tackleDirection * tackleSpeed)
+	tackledPressedInFrame = false
+	attack_particle.emitting = true
+	$Attack.play()
+
 func onStopAttack(): 
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property($Node2D/Body,"scale", faceRestScale, attackLerpTime)
 	tween.tween_property($Node2D/LeftHand,"position", handRestLocalPosition, attackLerpTime)
@@ -166,7 +173,7 @@ func _integrate_forces(state):
 	if tackledPressedInFrame:
 		tackle(state)
 
-	if(state.get_contact_count() >= 1): 
+	if(state.get_contact_count() > 0): 
 		local_collision_pos = state.get_contact_local_position(0)
 
 func handlePowerup(powerupType):
@@ -187,7 +194,7 @@ func scoreUpdate(playerNumIn, scoreIn):
 			$Labels/ScoreChange.set("theme_override_colors/font_color",Color(1,0.5,0.5))
 		$Labels/ScoreChange.text = scoreStr
 		$Labels/ScoreChange.visible = true
-		var tween = get_tree().create_tween()
+		var tween = create_tween()
 		tween.set_parallel(true)
 		tween.tween_property($Labels/ScoreChange,"scale",Vector2(5,5),1)
 		tween.tween_property($Labels/ScoreChange,"position",Vector2(-$Labels/ScoreChange.size.x*2.5,-200),1)
@@ -201,6 +208,7 @@ func scoreLabelReset():
 
 func _on_attack_timer_timeout():
 	canAttack = true
+	hasTackled = false
 	onStopAttack()
 	
 func tickProcess():
@@ -210,25 +218,21 @@ func tickProcess():
 		stuckBoostSeconds -=1
 
 func onCollision(body):
-	$Collision.play()
 	if body.get_script() != null:
 		# Turn off attack particle on hit
 		attack_particle.emitting = false
-		if !body.canAttack and canAttack:
-			print("hit")
+		
+		if !body.hasTackled:
+			hit_particle.global_position = local_collision_pos
+			hit_particle.emitting = true
 			face.texture = hit_face
 			stunned = true
-			
-			hit_particle.position = local_collision_pos
-			hit_particle.emitting = true
-			
 			GameGlobals.shakeCamera.emit(0.4)
-			await get_tree().create_timer(1.0).timeout
+			await get_tree().create_timer(0.1).timeout
 			face.texture = original_face
 			stunned = false
 			ai_target = null
-			
-			
+	
 			
 func find_players() -> Array[Node2D]:
 	return GameGlobals.players
@@ -239,20 +243,14 @@ func find_target():
 	for p in players:
 		if p.get_instance_id() == self.get_instance_id():
 			continue
-		
+
 		if p.global_position.distance_to(self.global_position) < closest:
 			closest = p.global_position.distance_to(self.global_position)
-			print("PLAYER target" + str(p.deviceId))
 			ai_target = p
-	
-	
 
-			
 func ai_update():
 	if ai_target == null:
 		find_target()
-	
-	
 	var direction = (ai_target.global_position - global_position).normalized()
 	playerMoveDirection = direction
 	if canAttack and ai_target.global_position.distance_to(self.global_position) <= AI_ATTACK_RANGE:
@@ -260,7 +258,4 @@ func ai_update():
 		tackleDirection = playerMoveDirection
 		ai_target = null
 		playerMoveDirection = Vector2.ZERO
-		
-			
-		
-			
+		canAttack = false
