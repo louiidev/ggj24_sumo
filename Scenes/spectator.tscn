@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwmvyqehpmw2j"]
+
+[ext_resource type="Texture2D" uid="uid://xqjsk1wr7ibw" path="res://Assets/blue_body_squircle.png" id="1_y6sup"]
+[ext_resource type="Texture2D" uid="uid://b01cwwx6ewgsh" path="res://Assets/faces/face_a.png" id="2_c8vah"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f7ej3"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0o78l"]
+radius = 80.2
+
+[node name="Spectator" type="Sprite2D"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_y6sup")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+mass = 0.86
+physics_material_override = SubResource("PhysicsMaterial_f7ej3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_0o78l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_c8vah")

@@ -209,19 +209,17 @@ func tickProcess():
 	if(stuckBoostSeconds > 0):
 		stuckBoostSeconds -=1
 
-func onCollision(_bodyIn):
+func onCollision(body):
 	$Collision.play()
-
-func _on_body_entered(body):
 	if body.get_script() != null:
 		# Turn off attack particle on hit
 		attack_particle.emitting = false
 		if !body.canAttack and canAttack:
+			print("hit")
 			face.texture = hit_face
 			stunned = true
 			
-			var collision_position = local_collision_pos
-			hit_particle.position = collision_position
+			hit_particle.position = local_collision_pos
 			hit_particle.emitting = true
 			
 			GameGlobals.shakeCamera.emit(0.4)
@@ -230,7 +228,8 @@ func _on_body_entered(body):
 			stunned = false
 			ai_target = null
 			
-
+			
+			
 func find_players() -> Array[Node2D]:
 	return GameGlobals.players
 	
