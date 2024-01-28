@@ -8,7 +8,7 @@ var winner
 func _ready():
 	scoreLabels = $UI/Scores/MarginContainer/Bottom/MarginContainer/Scores.get_children()
 	var winnerScore = 0
-	for idx in range(0,3):
+	for idx in range(0,4):
 		scoreLabels[idx].text = str(GameGlobals.playerScores[idx])
 		if(GameGlobals.playerScores[idx] > winnerScore):
 			winner = idx
