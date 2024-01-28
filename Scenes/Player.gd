@@ -230,8 +230,7 @@ func _on_body_entered(body):
 			stunned = false
 			ai_target = null
 			
-			
-			
+
 func find_players() -> Array[Node2D]:
 	return GameGlobals.players
 	

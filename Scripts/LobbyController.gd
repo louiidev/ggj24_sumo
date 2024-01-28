@@ -66,7 +66,6 @@ func start_game():
 
 
 func check_start_game():
-
 	if start_game_panel.visible:
 		if Input.is_action_just_pressed("ui_accept"):
 			start_game()
@@ -76,6 +75,8 @@ func check_start_game():
 		start_game_panel.show()
 	
 
+func musicFinished():
+	$MenuMusic.play()
 #func despawn_player(device: int):
 	#players_joined[device] = false;
 	#match device:

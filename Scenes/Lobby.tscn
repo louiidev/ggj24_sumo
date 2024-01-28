@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxk0q47eeige5"]
+[gd_scene load_steps=9 format=3 uid="uid://dxk0q47eeige5"]
 
 [ext_resource type="Script" path="res://Scripts/LobbyController.gd" id="1_lepxv"]
 [ext_resource type="Texture2D" uid="uid://dkf5vgofreovg" path="res://logo.png" id="2_y1sw5"]
 [ext_resource type="Texture2D" uid="uid://dmxvbswb4turr" path="res://images/inputs/xbox_button_color_b.png" id="3_516lj"]
 [ext_resource type="Texture2D" uid="uid://d2b8ybpmp420b" path="res://images/inputs/xbox_button_color_a.png" id="4_kve6y"]
+[ext_resource type="AudioStream" uid="uid://caydsaqmg6vws" path="res://Music/Sumo - Title & Pause Loop.wav" id="5_33t8y"]
 
 [sub_resource type="Theme" id="Theme_3qb2l"]
 
@@ -107,3 +108,9 @@ text = "YES"
 layout_mode = 2
 texture = ExtResource("4_kve6y")
 stretch_mode = 4
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_33t8y")
+autoplay = true
+
+[connection signal="finished" from="MenuMusic" to="." method="musicFinished"]

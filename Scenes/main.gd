@@ -68,3 +68,5 @@ func handlePowerup(typeIn):
 				p.position.x = $Boundry.position.x + r * cos(theta)
 				p.position.y = $Boundry.position.y + r * sin(theta)
 
+func musicFinished():
+	$GameMusic.play()

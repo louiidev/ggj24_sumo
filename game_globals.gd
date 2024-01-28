@@ -9,7 +9,7 @@ signal shakeCamera(amount: int)
 var playerScores = [0,0,0,0]
 var playerColors: Array[String] = ['#00a700', '#ff604f', '#c0ac00', '#f67aff']
 enum PlayerType { Player, CPU }
-var countDown = 20
+var countDown = 120
 
 enum powerupType {SCORE,DUD,REVERSE_SCORE,SPEED_PLAYER,MUD,TELEPORT}
 
@@ -21,5 +21,5 @@ func set_player(p: Node2D):
 
 func reset():
 	playerScores = [0,0,0,0]
-	countDown = 20
+	countDown = 120
 	players = []
