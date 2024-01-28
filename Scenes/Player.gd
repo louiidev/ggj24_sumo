@@ -177,10 +177,10 @@ func _on_body_entered(body):
 			face.texture = hit_face
 			stunned = true
 			GameGlobals.shakeCamera.emit(0.4)
-			print("SHAKE FROM PLAYER")
 			await get_tree().create_timer(1.0).timeout
 			face.texture = original_face
 			stunned = false
+			ai_target = null
 			
 			
 			
@@ -205,23 +205,16 @@ func find_target():
 func ai_update():
 	if ai_target == null:
 		find_target()
-		var time = randf_range(3, 10);
-		print(time)
-		ai_timer.start(time)
-		ai_timer.wait_time = 0
-		print(ai_timer.time_left)
-		
 	
-	if ai_timer.is_stopped():
-		var direction = (ai_target.global_position - global_position).normalized()
-		playerMoveDirection = direction
-		if canAttack and ai_target.global_position.distance_to(self.global_position) <= AI_ATTACK_RANGE:
-			tackledPressedInFrame = true
-			tackleDirection = playerMoveDirection
-			print("ATTACKING")
-			ai_target = null
-			ai_timer.stop()
-			playerMoveDirection = Vector2.ZERO
+	
+	var direction = (ai_target.global_position - global_position).normalized()
+	playerMoveDirection = direction
+	if canAttack and ai_target.global_position.distance_to(self.global_position) <= AI_ATTACK_RANGE:
+		tackledPressedInFrame = true
+		tackleDirection = playerMoveDirection
+		ai_target = null
+		playerMoveDirection = Vector2.ZERO
+		
 			
 		
 			
