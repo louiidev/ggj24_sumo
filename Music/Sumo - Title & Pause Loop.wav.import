@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://caydsaqmg6vws"
+path="res://.godot/imported/Sumo - Title & Pause Loop.wav-26ec329c7d05367cddb5d2eec7ca4ab5.sample"
+
+[deps]
+
+source_file="res://Music/Sumo - Title & Pause Loop.wav"
+dest_files=["res://.godot/imported/Sumo - Title & Pause Loop.wav-26ec329c7d05367cddb5d2eec7ca4ab5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
