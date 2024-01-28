@@ -15,6 +15,14 @@ var lookDirection = 0.0
 var speedBoostSeconds = 0
 var stuckBoostSeconds = 0
 
+var attackLerpTime = 0.05
+
+var handRestLocalPosition = Vector2(150, 0)
+var handAttackLocalPosition = Vector2(100, -100)
+
+var faceRestScale = Vector2.ONE
+var faceAttackScale = Vector2(0.85, 1)
+
 var hasTackled: bool = false
 var stunned: bool = false
 
@@ -42,6 +50,7 @@ var faces = [
 @onready var hit_particle: CPUParticles2D = $HitParticle
 
 var hit_face: Texture;
+var attack_face: Texture;
 var original_face: Texture;
 var local_collision_pos: Vector2
 
@@ -64,6 +73,7 @@ func set_sprite():
 	original_face = face_texture
 	
 	hit_face = load("res://Assets/faces/face_j.png")
+	attack_face = load("res://Assets/faces/face_f.png")
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -120,15 +130,27 @@ func tackle(state):
 	hasTackled = true
 	state.apply_impulse(tackleDirection * tackleSpeed)
 	tackledPressedInFrame = false
-	$Attack.play()
-
-func onAttack(state):
-	get_node("AttackTimer").start()
-	canAttack = false
-	hasTackled = true
-	state.apply_impulse(Vector2.from_angle(rotation) * tackleSpeed)
 	attack_particle.emitting = true
 	$Attack.play()
+
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Node2D/Body,"scale", faceAttackScale, attackLerpTime)
+	tween.tween_property($Node2D/LeftHand,"position", handAttackLocalPosition, attackLerpTime)
+	tween.tween_property($Node2D/RightHand,"position", handAttackLocalPosition * Vector2.LEFT, attackLerpTime)
+	tween.play()
+	
+	face.texture = attack_face
+	
+func onStopAttack(): 
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Node2D/Body,"scale", faceRestScale, attackLerpTime)
+	tween.tween_property($Node2D/LeftHand,"position", handRestLocalPosition, attackLerpTime)
+	tween.tween_property($Node2D/RightHand,"position", handRestLocalPosition * Vector2.LEFT, attackLerpTime)
+	tween.play()
+	
+	face.texture = original_face
 
 func _integrate_forces(state):
 	var boostMultiplier = 1
@@ -140,8 +162,15 @@ func _integrate_forces(state):
 	
 	if tackledPressedInFrame:
 		tackle(state)
+
 	if(state.get_contact_count() >= 1): 
 		local_collision_pos = state.get_contact_local_position(0)
+	
+	if !stunned and Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) > 0 && !hasTackled && canAttack:
+		tackle(state)
+		
+	if Input.get_joy_axis(deviceId, JOY_AXIS_TRIGGER_RIGHT) <= 0:
+		onStopAttack()
 
 func handlePowerup(powerupType):
 	match powerupType:
@@ -175,6 +204,7 @@ func scoreLabelReset():
 
 func _on_attack_timer_timeout():
 	canAttack = true
+	onStopAttack()
 	
 func tickProcess():
 	if(speedBoostSeconds > 0):

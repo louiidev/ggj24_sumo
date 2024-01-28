@@ -31,7 +31,7 @@ rotation = 1.5708
 scale = Vector2(0.25, 0.25)
 
 [node name="RightHand" type="Sprite2D" parent="Node2D"]
-position = Vector2(150, 0)
+position = Vector2(150, 2.08165e-12)
 texture = ExtResource("2_8jlyl")
 
 [node name="Body" type="Sprite2D" parent="Node2D"]
@@ -42,7 +42,7 @@ rotation = 3.14159
 texture = ExtResource("4_uym6b")
 
 [node name="LeftHand" type="Sprite2D" parent="Node2D"]
-position = Vector2(-150, 0)
+position = Vector2(-150, 2.08165e-12)
 texture = ExtResource("2_8jlyl")
 flip_h = true
 
